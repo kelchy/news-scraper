@@ -12,7 +12,8 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 //===== Load Routes
-const main = require('./routes/main');
+const index = require('./routes/index');
+const scraper = require('./routes/scraper');
 
 //===== Middleware
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -24,9 +25,9 @@ app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars');
 app.set('views', path.join(__dirname, 'views'));
 
-
 //===== Use Routes
-app.use('/', main);
+app.use('/', index);
+app.use('/api', scraper);
 
 //===== Listen
 app.listen(PORT, () => {
