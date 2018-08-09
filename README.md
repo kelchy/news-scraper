@@ -1,5 +1,15 @@
 # All the News That's Fit to Scrape
 
+Articles
+title
+link
+date
+category
+source
+
+Comments
+
+
 * app that lets users view and leave comments on latest news
 * Mongoose and Cheero, scrape news from another site
 
