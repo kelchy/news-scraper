@@ -60,20 +60,25 @@ nav {
   100% { transform: rotate(360deg); }
 }
 
+/* Articles Tab CSS */
 #articles-tab table {
   display: none;
 }
-
 .save-article {
   color: crimson;
   margin-left: 0.4rem;
   font-size: 0.85rem;
 }
-
 .alert {
   background-color: aliceblue;
   color: maroon;
   display: none;
   width: 100%;
   word-wrap: break-word;
+}
+#filter-settings {
+  display: none;
+}
+#filter-settings label {
+  margin-right: 1rem;
 }

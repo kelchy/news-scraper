@@ -6,6 +6,7 @@ const App = (() => {
 
   const init = () => {
     $('.tabs').tabs(); // Materialize tabs init
+    $('.collapsible').collapsible(); // Materialize collapsible init
     
     $.get({ // Scrape Data
       url: '/api/scrape'
@@ -14,13 +15,23 @@ const App = (() => {
       data.articles = result.articles;
       Render.removeLoader();
       Render.showAlert(JSON.stringify(data.scrapeRecord, undefined, 2));
+      Render.showFilterSettings();
       Render.showArticlesTable(data.articles);
     });
 
     $(document).on('click', '.save-article', (e) => {
       e.preventDefault();
-  
       console.log('clicked');
+    });
+
+    $('#articles-tab input[type="checkbox"]').on('change', () => {
+      let categories = [];
+      $('input[type="checkbox"]:checked').each(function(){
+        categories.push($(this).val()); 
+      });
+
+      const filtered = data.articles.filter((article) => categories.includes(article.category));
+      Render.showArticlesTable(filtered);
     });
   }
 
@@ -43,7 +54,12 @@ const Render = (() => {
     }, 15000);
   }
 
+  const showFilterSettings = () => {
+    $('#filter-settings').css('display', 'block');
+  }
+
   const showArticlesTable = (articles) => {
+    $('#articles-tab tbody').empty();
     $('#articles-tab table').css('display', 'table');
     for (const article of articles) {
       const $tdTitle = $('<td>', { 
@@ -63,13 +79,11 @@ const Render = (() => {
   return {
     removeLoader,
     showAlert,
+    showFilterSettings,
     showArticlesTable
   }
 })();
 
 $(document).ready(() => {
-  
-
-  App.init();
-  
+  App.init();  
 });
