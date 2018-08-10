@@ -3,9 +3,7 @@ const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const exphbs = require('express-handlebars');
-
-//===== Database/Models
-const db = require('./models');
+const mongoose = require('mongoose');
 
 //===== App
 const app = express();
@@ -15,6 +13,9 @@ const PORT = process.env.PORT || 3000;
 const index = require('./routes/index');
 const scraper = require('./routes/scraper');
 
+//===== Database Config
+mongoose.connect('mongodb://localhost:27017/news-scraper', { useNewUrlParser: true });
+
 //===== Middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -23,7 +24,6 @@ app.use(express.static(__dirname + './public'));
 //===== Handlebars
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars');
-app.set('views', path.join(__dirname, 'views'));
 
 //===== Use Routes
 app.use('/', index);

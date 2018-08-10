@@ -5,13 +5,13 @@ const ScrapeRecordSchema = new Schema({
   numMsnbcArticles: Number,
   numCnnArticles: Number,
   numFoxNewsArticles: Number,
-  timeToScrape: Number,
+  executionTime: Number,
   date:{ 
     type: Date,
     default: Date.now
   }
 });
 
-const ScrapeRecord = mongoose.model('ScrapeRecord', ScrapeRecord);
+const ScrapeRecord = mongoose.model('ScrapeRecord', ScrapeRecordSchema);
 
 module.exports = ScrapeRecord;
