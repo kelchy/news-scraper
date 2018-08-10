@@ -25,12 +25,17 @@ const App = (() => {
     });
 
     $('#articles-tab input[type="checkbox"]').on('change', () => {
+      let sources = [];
       let categories = [];
-      $('input[type="checkbox"]:checked').each(function(){
+
+      $('#source-filter input[type="checkbox"]:checked').each(function(){
+        sources.push($(this).val()); 
+      });
+      $('#category-filter input[type="checkbox"]:checked').each(function(){
         categories.push($(this).val()); 
       });
 
-      const filtered = data.articles.filter((article) => categories.includes(article.category));
+      const filtered = data.articles.filter((article) => sources.includes(article.source) && categories.includes(article.category));
       Render.showArticlesTable(filtered);
     });
   }
