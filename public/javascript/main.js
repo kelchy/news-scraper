@@ -1,7 +1,8 @@
 const App = (() => {
   const data = {
     scrapeRecord: null,
-    articles: null
+    articles: null,
+    saved: null
   }
 
   const init = () => {
@@ -16,9 +17,10 @@ const App = (() => {
       Render.removeLoader();
       Render.showAlert(JSON.stringify(data.scrapeRecord, undefined, 2));
       Render.showFilterSettings();
-      Render.showArticlesTable(data.articles);
+      Render.showArticlesTable('#articles-tab', data.articles, {class: 'save-article', text: 'Save'});
     });
 
+    // 'Articles' Tab
     $(document).on('click', '.save-article', function(e) {
       e.preventDefault();
 
@@ -35,6 +37,7 @@ const App = (() => {
       }).then(result => {
         data.articles = data.articles.filter((article) => article.title !== newArticle.title);
         $(this).parent().parent().remove();
+        Render.showAlert(JSON.stringify(result, undefined, 2));
       });
     });
 
@@ -42,15 +45,46 @@ const App = (() => {
       let sources = [];
       let categories = [];
 
-      $('#source-filter input[type="checkbox"]:checked').each(function(){
+      $('#articles-tab .source-filter input[type="checkbox"]:checked').each(function(){
         sources.push($(this).val()); 
       });
-      $('#category-filter input[type="checkbox"]:checked').each(function(){
+      $('#articles-tab .category-filter input[type="checkbox"]:checked').each(function(){
         categories.push($(this).val()); 
       });
 
       const filtered = data.articles.filter((article) => sources.includes(article.source) && categories.includes(article.category));
-      Render.showArticlesTable(filtered);
+      Render.showArticlesTable('#articles-tab', filtered, {class: 'save-article', text: 'Save'});
+    });
+
+    // 'Saved' Tab
+    $('#tabs-nav ul li:eq(2)').on('click', () => {
+      $.get({
+        url: '/api/articles'
+      }).then(result => {
+        data.saved = result;
+        Render.showArticlesTable('#saved-tab', result, {class: 'view-comments', text: 'View Comments'});
+      });
+    });
+    
+    $('#saved-tab input[type="checkbox"]').on('change', () => {
+      let sources = [];
+      let categories = [];
+
+      $('#saved-tab .source-filter input[type="checkbox"]:checked').each(function(){
+        sources.push($(this).val()); 
+      });
+      $('#saved-tab .category-filter input[type="checkbox"]:checked').each(function(){
+        categories.push($(this).val()); 
+      });
+
+      const filtered = data.saved.filter((article) => sources.includes(article.source) && categories.includes(article.category));
+      Render.showArticlesTable('#saved-tab', filtered);
+    });
+
+    $(document).on('click', '.view-comments', function(e) {
+      e.preventDefault();
+
+      console.log('clicked');
     });
   }
 
@@ -74,24 +108,24 @@ const Render = (() => {
   }
 
   const showFilterSettings = () => {
-    $('#filter-settings').css('display', 'block');
+    $('#articles-tab .filter-settings').css('display', 'block');
   }
 
-  const showArticlesTable = (articles) => {
-    $('#articles-tab tbody').empty();
-    $('#articles-tab table').css('display', 'table');
+  const showArticlesTable = (tabSelector, articles, linkOpts) => {
+    $(`${tabSelector} tbody`).empty();
+    $(`${tabSelector} table`).css('display', 'table');
     for (const article of articles) {
       const $tdTitle = $('<td>', { 
         html: `
           <a href='${article.link}' target='_blank'>${article.title}</a>
-          <a href='' class="save-article">[Save]</a>`
+          <a href='' class="${linkOpts.class}">[${linkOpts.text}]</a>`
 
       });
       const $tdCategory = $('<td>', {text: article.category});
       const $tdSource = $('<td>', {text: article.source});
       const $tr = $('<tr>').append($tdTitle, $tdCategory, $tdSource);
 
-      $('#articles-tab tbody').append($tr);
+      $(`${tabSelector} tbody`).append($tr);
     };
   }
 

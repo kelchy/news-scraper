@@ -1,5 +1,13 @@
 const db = require('../models');
 
+const getArticles = (req, res) => {
+  db.Article.find({}).then(articles => {
+    res.json(articles);
+  }).catch(err => {
+    res.json(err);
+  });
+}
+
 const saveArticle = (req, res) => {
   const article = req.body;
 
@@ -11,5 +19,6 @@ const saveArticle = (req, res) => {
 }
 
 module.exports = {
+  getArticles,
   saveArticle
 }

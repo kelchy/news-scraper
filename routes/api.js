@@ -7,6 +7,10 @@ router.get('/scrape', (req, res) => {
   scraperController.getAllArticles(req, res);
 });
 
+router.get('/articles', (req, res) => {
+  articleController.getArticles(req, res);
+});
+
 router.post('/articles', (req, res) => {
   articleController.saveArticle(req, res);
 });

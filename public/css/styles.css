@@ -32,6 +32,7 @@ nav {
 .tab-content {
   padding: 1rem;
   min-height: 200px;
+  width: 100%
 }
 
 .loader-container {
@@ -60,6 +61,14 @@ nav {
   100% { transform: rotate(360deg); }
 }
 
+.filter-settings {
+  width: 100%;
+}
+
+.filter-settings label {
+  margin-right: 1rem;
+}
+
 /* Articles Tab CSS */
 #articles-tab table {
   display: none;
@@ -76,9 +85,13 @@ nav {
   width: 100%;
   word-wrap: break-word;
 }
-#filter-settings {
+#articles-tab .filter-settings {
   display: none;
 }
-#filter-settings label {
-  margin-right: 1rem;
+
+/* Saved Tab CSS */
+.view-comments {
+  color: crimson;
+  margin-left: 0.4rem;
+  font-size: 0.85rem;
 }
