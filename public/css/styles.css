@@ -95,3 +95,21 @@ nav {
   margin-left: 0.4rem;
   font-size: 0.85rem;
 }
+.custom-badge {
+  padding: 0 6px;
+  margin-right: 0.4rem;
+  font-size: 1rem;
+  line-height: 1.3rem;
+  height: 1.3rem;
+  border-radius: 2px;
+}
+#addCommentForm {
+  padding: 0.4rem 0;
+}
+#addCommentForm .btn {
+  font-size: 1rem;
+  padding: 0 0.8rem;
+  margin-bottom: 0.4rem;
+  line-height: 1.8rem;
+  height: 1.8rem;
+}

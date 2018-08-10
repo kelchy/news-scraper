@@ -8,6 +8,7 @@ const App = (() => {
   const init = () => {
     $('.tabs').tabs(); // Materialize tabs init
     $('.collapsible').collapsible(); // Materialize collapsible init
+    $('.modal').modal(); // Materialize modal init
     
     $.get({ // Scrape Data
       url: '/api/scrape'
@@ -54,6 +55,7 @@ const App = (() => {
 
       const filtered = data.articles.filter((article) => sources.includes(article.source) && categories.includes(article.category));
       Render.showArticlesTable('#articles-tab', filtered, {class: 'save-article', text: 'Save'});
+
     });
 
     // 'Saved' Tab
@@ -84,7 +86,34 @@ const App = (() => {
     $(document).on('click', '.view-comments', function(e) {
       e.preventDefault();
 
-      console.log('clicked');
+      const article = {
+        id: $(this).data('id'),
+        date: $(this).data('date'),
+        source: $(this).parent().parent().find('td:eq(2)').text(),
+        category: $(this).parent().parent().find('td:eq(1)').text(),
+        title: $(this).parent().find('a:eq(0)').text(),
+        link: $(this).parent().find('a:eq(0)').attr('href')
+      }
+
+      $('#articleModal h5').html(`<a href="${article.link}" target="_blank">${article.title}</a>`);
+      $('#articleModal #articleInfo').html(`
+        <div>
+          <span class="custom-badge blue lighten-1 white-text">${article.category}</span> <span class="custom-badge cyan lighten-1 white-text">${article.source}</span>
+          <span class="custom-badge red lighten-2 white-text">
+            ${moment.utc(article.date).local().format('MMM D, YYYY')}
+          </span>
+        </div>
+        <div class="right-align">
+          <a href="" data-id="${article.id}" class="delete-article">delete article
+        </div>`);
+
+      $('#articleModal').modal('open');
+    });
+
+    $(document).on('click', '.delete-article', function(e) {
+      e.preventDefault();
+
+      console.log('delete article btn clicked');
     });
   }
 
@@ -118,7 +147,10 @@ const Render = (() => {
       const $tdTitle = $('<td>', { 
         html: `
           <a href='${article.link}' target='_blank'>${article.title}</a>
-          <a href='' class="${linkOpts.class}">[${linkOpts.text}]</a>`
+          <a href='' 
+            ${article._id ? `data-id="${article._id}"` : ''}
+            ${article.dateScraped ? `data-date="${article.dateScraped}"` : ''}  
+            class="${linkOpts.class}">[${linkOpts.text}]</a>`
 
       });
       const $tdCategory = $('<td>', {text: article.category});
