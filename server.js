@@ -1,5 +1,4 @@
 //===== Dependencies
-const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const exphbs = require('express-handlebars');
@@ -19,7 +18,7 @@ mongoose.connect('mongodb://localhost:27017/news-scraper', { useNewUrlParser: tr
 //===== Middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(express.static(__dirname + './public'));
+app.use(express.static('public'));
 
 //===== Handlebars
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }));

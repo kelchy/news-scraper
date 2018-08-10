@@ -1,0 +1,79 @@
+body {
+  background-image: url('../images/crossword.png');
+}
+
+nav {
+  margin-bottom: 1.5rem;
+}
+
+/* Tabs */
+#tabs-nav {
+  padding: 0;
+}
+
+.tabs .tab a {
+  color: #009bad;
+}
+
+.tabs .tab a:hover, 
+.tabs .tab a.active {
+  color: #009bad95;
+}
+
+.tabs .tab a:focus, 
+.tabs .tab a:focus.active {
+  background-color: #98dfaf20;
+}
+
+.tabs .indicator {
+	background-color: #009bad;
+}
+
+.tab-content {
+  padding: 1rem;
+  min-height: 200px;
+}
+
+.loader-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loader-container span {
+  margin-left: 1rem;
+}
+
+.loader {
+  margin: 0;
+  border: 9px solid #e1bee7; 
+  border-top: 9px solid #ba68c8;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1.7s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+#articles-tab table {
+  display: none;
+}
+
+.save-article {
+  color: crimson;
+  margin-left: 0.4rem;
+  font-size: 0.85rem;
+}
+
+.alert {
+  background-color: aliceblue;
+  color: maroon;
+  display: none;
+  width: 100%;
+  word-wrap: break-word;
+}

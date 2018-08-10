@@ -1,3 +1,35 @@
 <div class="container">
-  <a id="scrapeArticles" class="waves-effect waves-light btn">button</a>
+  <div class="row z-depth-2 lime lighten-5">
+    <div id="tabs-nav" class="col s12">
+      <ul class="tabs">
+        <li class="tab col s3"><a href="#about-tab">About</a></li>
+        <li class="tab col s3"><a class="active" href="#articles-tab">Articles</a></li>
+        <li class="tab col s3"><a href="#saved-tab">Saved</a></li>
+        <li class="tab col s3"><a href="#scrape-tab">Scrape</a></li>
+      </ul>
+    </div>
+
+    <div id="about-tab" class="col s12">Test 1</div>
+    <div id="articles-tab" class="col s12">
+      <div class="tab-content valign-wrapper">
+        <div class="alert"></div>
+        <div class="loader-container">
+          <div class="loader"></div>
+          <span>Scraping Articles...</span>
+        </div>
+        <table>
+          <thead>
+            <tr>              
+              <th>Title</th>
+              <th>Category</th>
+              <th>Source</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>   
+    </div>
+    <div id="saved-tab" class="col s12">Test 4</div>
+    <div id="scrape-tab" class="col s12">Test 4</div>
+  </div>   
 </div>
