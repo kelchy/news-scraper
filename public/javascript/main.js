@@ -19,9 +19,23 @@ const App = (() => {
       Render.showArticlesTable(data.articles);
     });
 
-    $(document).on('click', '.save-article', (e) => {
+    $(document).on('click', '.save-article', function(e) {
       e.preventDefault();
-      console.log('clicked');
+
+      const newArticle = {
+        source: $(this).parent().parent().find('td:eq(2)').text(),
+        category: $(this).parent().parent().find('td:eq(1)').text(),
+        title: $(this).parent().find('a:eq(0)').text(),
+        link: $(this).parent().find('a').attr('href')
+      };
+
+      $.post({
+        url: '/api/articles',
+        data: newArticle
+      }).then(result => {
+        data.articles = data.articles.filter((article) => article.title !== newArticle.title);
+        $(this).parent().parent().remove();
+      });
     });
 
     $('#articles-tab input[type="checkbox"]').on('change', () => {

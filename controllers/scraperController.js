@@ -79,14 +79,14 @@ async function getMsnbcArticles(instance) {
     });
   });
 
-  $('div.featured-slider__teaser h2.featured-slider__teaser__title a').each((i, el) => {
-    msnbcArticles.push({
-      source: 'MSNBC',
-      category: 'politics',
-      title: $(el).text(),
-      link: modifyMsnbcArticleLink($(el).attr('href'))
-    });
-  });
+  // $('div.featured-slider__teaser h2.featured-slider__teaser__title a').each((i, el) => {
+  //   msnbcArticles.push({
+  //     source: 'MSNBC',
+  //     category: 'politics',
+  //     title: $(el).text(),
+  //     link: modifyMsnbcArticleLink($(el).attr('href'))
+  //   });
+  // });
 
   return msnbcArticles;
 }

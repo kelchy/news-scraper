@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 3000;
 
 //===== Load Routes
 const index = require('./routes/index');
-const scraper = require('./routes/scraper');
+const api = require('./routes/api');
 
 //===== Database Config
 mongoose.connect('mongodb://localhost:27017/news-scraper', { useNewUrlParser: true });
@@ -26,7 +26,7 @@ app.set('view engine', 'handlebars');
 
 //===== Use Routes
 app.use('/', index);
-app.use('/api', scraper);
+app.use('/api', api);
 
 //===== Listen
 app.listen(PORT, () => {
