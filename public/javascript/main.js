@@ -87,14 +87,14 @@ const App = (() => {
       e.preventDefault();
 
       $.get({
-        url: `/api/articles/${$(this).data('id')}`
+        url: `/api/articles/${$(this).attr('data-id')}`
       }).then(article => {
         Render.showCommentsTable(article.comments, article._id);
       });
 
       const article = {
-        id: $(this).data('id'),
-        date: $(this).data('date'),
+        id: $(this).attr('data-id'),
+        date: $(this).attr('data-date'),
         source: $(this).parent().parent().find('td:eq(2)').text(),
         category: $(this).parent().parent().find('td:eq(1)').text(),
         title: $(this).parent().find('a:eq(0)').text(),
@@ -112,6 +112,7 @@ const App = (() => {
         <div class="right-align">
           <a href="" data-id="${article.id}" class="delete-article">delete article
         </div>`);
+      $('#articleModal #addCommentBtn').attr('data-id', $(this).attr('data-id'));
 
       $('#articleModal').modal('open');
     });
@@ -120,11 +121,11 @@ const App = (() => {
       e.preventDefault();
 
       $.ajax({
-        url: `/api/articles/${$(this).data('id')}`,
+        url: `/api/articles/${$(this).attr('data-id')}`,
         method: 'DELETE'
       }).then(deleted => {
         data.saved = data.saved.filter(article => article._id !== deleted._id);
-        $(`.view-comments[data-id="${$(this).data('id')}"]`).parent().parent().remove();
+        $(`.view-comments[data-id="${$(this).attr('data-id')}"]`).parent().parent().remove();
         $('#articleModal').modal('close');
       });
     });
@@ -133,10 +134,21 @@ const App = (() => {
       e.preventDefault();
 
       $.ajax({
-        url: `/api/articles/${$(this).data('articleId')}/comments/${$(this).data('id')}`,
+        url: `/api/articles/${$(this).attr('data-articleId')}/comments/${$(this).attr('data-id')}`,
         method: 'DELETE'
       }).then(result => {
         $(this).parent().parent().remove();
+      });
+    });
+
+    $('#addCommentForm').submit(function(e) {
+      e.preventDefault();
+      
+      $.post({
+        url: `/api/articles/${$('#addCommentBtn').attr('data-id')}/comments`,
+        data: {content: $('#commentContent').val()}
+      }).then(result => {
+        Render.showNewComment(result[0], result[1]._id); // comment, articleId
       });
     });
   }
@@ -201,12 +213,27 @@ const Render = (() => {
     }
   }
 
+  const showNewComment = (comment, articleId) => {
+    const $tdContent = $('<td>', {text: comment.content});
+    const $tdDate = $('<td>', {
+      text: moment.utc(comment.dateCreated).local().format('M/D/YY h:mm a')
+    });
+    const $tdDelete = $('<td>', {
+      html: `<a href="" data-articleId="${articleId}" data-id="${comment._id}" class="delete-comment">delete</a>`
+    });
+    const $tr = $('<tr>').append($tdContent, $tdDate, $tdDelete);
+
+    $('#articleComments tbody').prepend($tr);
+    $('#commentContent').val('');
+  }
+
   return {
     removeLoader,
     showAlert,
     showFilterSettings,
     showArticlesTable,
-    showCommentsTable
+    showCommentsTable,
+    showNewComment
   }
 })();
 

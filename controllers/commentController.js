@@ -3,23 +3,27 @@ const db = require('../models');
 const saveComment = (req, res) => {
   db.Comment.create(req.body)
     .then(comment => {
-      return db.Article.findOneAndUpdate({ _id: req.params.article_id }, {$push: {"comments": comment._id}}, { new: true });
+      db.Article.findOneAndUpdate({ _id: req.params.article_id }, {$push: {"comments": comment._id}}, { new: true }).then(article => {
+        res.json([
+          comment,
+          article
+        ]);
+      }).catch(err => {
+        res.json(err);
+      });
     })
-    .then(function(dbArticle) {
-      // If we were able to successfully update an Article, send it back to the client
-      res.json(dbArticle);
-    })
-    .catch(function(err) {
-      // If an error occurred, send it to the client
+    .catch(err => {
       res.json(err);
     });
-
 }
 
 const deleteComment = (req, res) => {
+  // bugged -> deleting comment but not reference
   db.Comment.deleteOne({_id: req.params.id}).then(deleted => {
     res.json(deleted);
-  });
+  }).catch(err => {
+    res.json(err);
+  });;
 }
 
 module.exports = {
