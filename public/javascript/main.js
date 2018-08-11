@@ -89,7 +89,7 @@ const App = (() => {
       $.get({
         url: `/api/articles/${$(this).data('id')}`
       }).then(article => {
-        Render.showCommentsTable(article.comments);
+        Render.showCommentsTable(article.comments, article._id);
       });
 
       const article = {
@@ -126,6 +126,17 @@ const App = (() => {
         data.saved = data.saved.filter(article => article._id !== deleted._id);
         $(`.view-comments[data-id="${$(this).data('id')}"]`).parent().parent().remove();
         $('#articleModal').modal('close');
+      });
+    });
+
+    $(document).on('click', '.delete-comment', function(e) {
+      e.preventDefault();
+
+      $.ajax({
+        url: `/api/articles/${$(this).data('articleId')}/comments/${$(this).data('id')}`,
+        method: 'DELETE'
+      }).then(result => {
+        $(this).parent().parent().remove();
       });
     });
   }
@@ -174,7 +185,7 @@ const Render = (() => {
     };
   }
 
-  const showCommentsTable = comments => {
+  const showCommentsTable = (comments, articleId) => {
     $('#articleComments tbody').empty();
     for (const comment of comments) {
       const $tdContent = $('<td>', {text: comment.content});
@@ -182,7 +193,7 @@ const Render = (() => {
         text: moment.utc(comment.dateCreated).local().format('M/D/YY h:mm a')
       });
       const $tdDelete = $('<td>', {
-        html: `<a href="" data-id="${comment._id}" class="delete-comment">delete</a>`
+        html: `<a href="" data-articleId="${articleId}" data-id="${comment._id}" class="delete-comment">delete</a>`
       });
       const $tr = $('<tr>').append($tdContent, $tdDate, $tdDelete);
 
