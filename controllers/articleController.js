@@ -18,7 +18,18 @@ const saveArticle = (req, res) => {
   });
 }
 
+const deleteArticle = (req, res) => {
+  db.Article.findOne({_id: req.params.id}).then(article => {
+    article.remove().then(deleted => {
+      res.json(deleted);
+    });
+  }).catch(err => {
+    res.json(err);
+  });
+}
+
 module.exports = {
   getArticles,
-  saveArticle
+  saveArticle,
+  deleteArticle
 }

@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const Comment = require('./Comment');
 
 const ArticleSchema = new Schema({
   source: String,
@@ -18,10 +19,11 @@ const ArticleSchema = new Schema({
   ]
 });
 
-// Custom Instance Methods
-ArticleSchema.methods.setCategory = function() {
-
-};
+ArticleSchema.pre('remove', async function() {
+  this.comments.forEach(async function(commentId) {
+    await Comment.deleteOne({_id: commentId});
+  });
+});
 
 const Article = mongoose.model('Article', ArticleSchema);
 

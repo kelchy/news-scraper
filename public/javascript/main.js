@@ -80,7 +80,7 @@ const App = (() => {
       });
 
       const filtered = data.saved.filter((article) => sources.includes(article.source) && categories.includes(article.category));
-      Render.showArticlesTable('#saved-tab', filtered);
+      Render.showArticlesTable('#saved-tab', filtered, {class: 'view-comments', text: 'View Comments'});
     });
 
     $(document).on('click', '.view-comments', function(e) {
@@ -113,7 +113,14 @@ const App = (() => {
     $(document).on('click', '.delete-article', function(e) {
       e.preventDefault();
 
-      console.log('delete article btn clicked');
+      $.ajax({
+        url: `/api/articles/${$(this).data('id')}`,
+        method: 'DELETE'
+      }).then(deleted => {
+        data.saved = data.saved.filter(article => article._id !== deleted._id);
+        $(`.view-comments[data-id="${$(this).data('id')}"]`).parent().parent().remove();
+        $('#articleModal').modal('close');
+      });
     });
   }
 
