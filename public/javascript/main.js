@@ -151,6 +151,15 @@ const App = (() => {
         Render.showNewComment(result[0], result[1]._id); // comment, articleId
       });
     });
+
+    // Scrape Tab
+    $('#tabs-nav ul li:eq(3)').on('click', () => {
+      $.get({
+        url: '/api/scraperecords'
+      }).then(result => {
+        Render.showRecordsTable(result);
+      });
+    });
   }
 
   return {
@@ -227,13 +236,31 @@ const Render = (() => {
     $('#commentContent').val('');
   }
 
+  const showRecordsTable = records => {
+    $('#scrapeRecordsTable tbody').empty();
+
+    for (const record of records) {
+      const $tdDate = $('<td>', {
+        text: moment.utc(record.date).local().format('M/D/YY H:mm')
+      });
+      const $tdExecTime =  $('<td>', {text: record.executionTime});
+      const $tdMsnbc = $('<td>', {text: record.numMsnbcArticles});
+      const $tdCnn = $('<td>', {text: record.numCnnArticles});
+      const $tdFoxNews = $('<td>', {text: record.numFoxNewsArticles});
+      const $tr = $('<tr>').append($tdDate, $tdExecTime, $tdMsnbc, $tdCnn, $tdFoxNews);
+  
+      $('#scrapeRecordsTable tbody').append($tr);
+    }
+  }
+
   return {
     removeLoader,
     showAlert,
     showFilterSettings,
     showArticlesTable,
     showCommentsTable,
-    showNewComment
+    showNewComment,
+    showRecordsTable
   }
 })();
 

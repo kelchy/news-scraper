@@ -107,7 +107,7 @@ nav {
   margin-bottom: 0.8rem;
 }
 #articleComments td {
-  padding: 0;
+  padding: 0 0.2rem;
 }
 #articleComments td:nth-child(2),
 #articleComments td:nth-child(3) {
@@ -116,6 +116,12 @@ nav {
 } 
 #articleComments td:nth-child(3) a {
   color: mediumvioletred;
+}
+#articleComments tr td:first-child {
+  padding-left: 0;
+}
+#articleComments tr td:last-child {
+  padding-right: 0;
 }
 #addCommentForm {
   padding: 0.4rem 0;
@@ -126,4 +132,27 @@ nav {
   margin-bottom: 0.4rem;
   line-height: 1.8rem;
   height: 1.8rem;
+}
+
+/* Scrape Tab */
+#scrapeRecordsTable {
+  margin-bottom: 0.8rem;
+}
+#scrapeRecordsTable th,
+#scrapeRecordsTable td {
+  padding: 0 0.2rem;
+}
+#scrapeRecordsTable td:nth-child(2),
+#scrapeRecordsTable td:nth-child(3),
+#scrapeRecordsTable td:nth-child(4),
+#scrapeRecordsTable td:nth-child(5) {
+  text-align: right;
+}
+#scrapeRecordsTable tr th:first-child,
+#scrapeRecordsTable tr td:first-child {
+  padding-left: 0;
+}
+#scrapeRecordsTable tr th:last-child,
+#scrapeRecordsTable tr td:last-child {
+  padding-right: 0; 
 }

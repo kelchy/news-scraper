@@ -1,11 +1,16 @@
 const express = require('express');
 const router = express.Router();
 const scraperController = require('../controllers/scraperController');
+const scrapeRecordController = require('../controllers/scrapeRecordController');
 const articleController = require('../controllers/articleController');
 const commentController = require('../controllers/commentController');
 
 router.get('/scrape', (req, res) => {
   scraperController.getAllArticles(req, res);
+});
+
+router.get('/scraperecords', (req, res) => {
+  scrapeRecordController.getRecords(req, res);
 });
 
 router.get('/articles', (req, res) => {
