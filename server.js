@@ -13,7 +13,10 @@ const index = require('./routes/index');
 const api = require('./routes/api');
 
 //===== Database Config
-mongoose.connect('mongodb://localhost:27017/news-scraper', { useNewUrlParser: true });
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/news-scraper';
+
+mongoose.Promise = Promise;
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 
 //===== Middleware
 app.use(bodyParser.urlencoded({ extended: false }));
