@@ -1,11 +1,22 @@
 const db = require('../models');
 
 const getArticles = (req, res) => {
-  db.Article.find({}).then(articles => {
+  db.Article.find({}).sort({ dateScraped: -1}).then(articles => {
     res.json(articles);
   }).catch(err => {
     res.json(err);
   });
+}
+
+const getArticle = (req, res) => {
+  db.Article.findOne({_id: req.params.id})
+    .populate('comments')
+    .then(article => {
+      res.json(article);
+    })
+    .catch(err => {
+      res.json(err);
+    });
 }
 
 const saveArticle = (req, res) => {
@@ -30,6 +41,7 @@ const deleteArticle = (req, res) => {
 
 module.exports = {
   getArticles,
+  getArticle,
   saveArticle,
   deleteArticle
 }

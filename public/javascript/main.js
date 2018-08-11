@@ -86,6 +86,12 @@ const App = (() => {
     $(document).on('click', '.view-comments', function(e) {
       e.preventDefault();
 
+      $.get({
+        url: `/api/articles/${$(this).data('id')}`
+      }).then(article => {
+        Render.showCommentsTable(article.comments);
+      });
+
       const article = {
         id: $(this).data('id'),
         date: $(this).data('date'),
@@ -148,8 +154,8 @@ const Render = (() => {
   }
 
   const showArticlesTable = (tabSelector, articles, linkOpts) => {
-    $(`${tabSelector} tbody`).empty();
-    $(`${tabSelector} table`).css('display', 'table');
+    $(`${tabSelector} table.articles-table tbody`).empty();
+    $(`${tabSelector} table.articles-table`).css('display', 'table');
     for (const article of articles) {
       const $tdTitle = $('<td>', { 
         html: `
@@ -164,15 +170,32 @@ const Render = (() => {
       const $tdSource = $('<td>', {text: article.source});
       const $tr = $('<tr>').append($tdTitle, $tdCategory, $tdSource);
 
-      $(`${tabSelector} tbody`).append($tr);
+      $(`${tabSelector} table.articles-table tbody`).append($tr);
     };
+  }
+
+  const showCommentsTable = comments => {
+    $('#articleComments tbody').empty();
+    for (const comment of comments) {
+      const $tdContent = $('<td>', {text: comment.content});
+      const $tdDate = $('<td>', {
+        text: moment.utc(comment.dateCreated).local().format('M/D/YY h:mm a')
+      });
+      const $tdDelete = $('<td>', {
+        html: `<a href="" data-id="${comment._id}" class="delete-comment">delete</a>`
+      });
+      const $tr = $('<tr>').append($tdContent, $tdDate, $tdDelete);
+
+      $('#articleComments tbody').prepend($tr); // most recent comment at top
+    }
   }
 
   return {
     removeLoader,
     showAlert,
     showFilterSettings,
-    showArticlesTable
+    showArticlesTable,
+    showCommentsTable
   }
 })();
 

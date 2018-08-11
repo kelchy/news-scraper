@@ -1,9 +1,5 @@
 const db = require('../models');
 
-const getComments = (req, res) => {
-  
-}
-
 const saveComment = (req, res) => {
   db.Comment.create(req.body)
     .then(comment => {
@@ -27,7 +23,6 @@ const deleteComment = (req, res) => {
 }
 
 module.exports = {
-  getComments,
   saveComment,
   deleteComment
 }

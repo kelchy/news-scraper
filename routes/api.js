@@ -16,12 +16,12 @@ router.post('/articles', (req, res) => {
   articleController.saveArticle(req, res);
 });
 
-router.delete('/articles/:id', (req, res) => {
-  articleController.deleteArticle(req, res);
+router.get('/articles/:id', (req, res) => {
+  articleController.getArticle(req, res);
 });
 
-router.get('/articles/:article_id/comments', (req, res) => {
-  commentController.getComments(req, res);
+router.delete('/articles/:id', (req, res) => {
+  articleController.deleteArticle(req, res);
 });
 
 router.post('/articles/:article_id/comments', (req, res) => {

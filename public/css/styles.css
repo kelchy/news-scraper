@@ -103,6 +103,20 @@ nav {
   height: 1.3rem;
   border-radius: 2px;
 }
+#articleComments {
+  margin-bottom: 0.8rem;
+}
+#articleComments td {
+  padding: 0;
+}
+#articleComments td:nth-child(2),
+#articleComments td:nth-child(3) {
+  text-align: right;
+  font-size: 0.85rem;
+} 
+#articleComments td:nth-child(3) a {
+  color: mediumvioletred;
+}
 #addCommentForm {
   padding: 0.4rem 0;
 }
