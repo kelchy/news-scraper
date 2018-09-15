@@ -20,16 +20,16 @@
 
 ### API Endpoints
 
-|Method|  | Cool |
-|------|---|---|
-|GET   |
-|GET   |
-|POST  |
-|GET   |
-|DELETE|
-|POST  |
-|DELETE|
-|GET   | 
+|Method|Endpoint                              |Functionality                             |
+|------|--------------------------------------|------------------------------------------|
+|GET   |/api/scrape                           |get results of scrape operation           |
+|GET   |/api/articles                         |get all saved articles                    |
+|POST  |/api/articles                         |save a scraped article                    |
+|GET   |/api/articles/:id                     |get a saved article and its comments      |
+|DELETE|/api/articles/:id                     |deletes article and its comments          |
+|POST  |/api/articles/:article_id/comments    |creates a new comment for an article      |
+|DELETE|/api/articles/:article_id/comments/:id|deletes comment associated with an article|
+|GET   |/api/scraperecords                    |gets last 10 scrape records               | 
 
 ## Demo
 
