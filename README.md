@@ -2,8 +2,20 @@
 
 *Scrape news articles from MSNBC, CNN, and Fox News for future reference*
 
+[Demo](#demo) <br>
 [About](#about)<br>
-[Demo](#demo)
+[Technologies](#technologies)
+
+## Demo
+
+* [deployed link](https://news-scraper-551.herokuapp.com)
+* Articles are automatically scraped from the three news sites. Users can filter articles by source and/or category.
+  
+  ![scrape_and_filter](public/images/scrape_and_filter.gif)
+
+* Articles can be saved for future reference by clicking the save button. These articles will be visible in the saved tab. Each saved article allows for comments to be added and deleted, and can itself also be deleted. 
+
+  ![articles_comments](public/images/articles_comments.gif)
 
 ## About
 
@@ -31,13 +43,6 @@
 |DELETE|/api/articles/:article_id/comments/:id|deletes comment associated with an article|
 |GET   |/api/scraperecords                    |gets last 10 scrape records               | 
 
-## Demo
+## Technologies
 
-* [deployed link](https://news-scraper-551.herokuapp.com)
-* Articles are automatically scraped from the three news sites. Users can filter articles by source and/or category.
-  
-  ![scrape_and_filter](public/images/scrape_and_filter.gif)
-
-* Articles can be saved for future reference by clicking the save button. These articles will be visible in the saved tab. Each saved article allows for comments to be added and deleted, and can itself also be deleted. 
-
-  ![articles_comments](public/images/articles_comments.gif)
+* MongoDB, Mongoose, Node.js, Express, Handlebars.js, JavaScript, jQuery, Materialize
