@@ -10,8 +10,8 @@
 ### Scraping
 
 * Article titles and links are scraped from three news websites (MSNBC, CNN, and Fox News) using [Phantom](https://www.npmjs.com/package/phantom) and [Cheerio](https://www.npmjs.com/package/cheerio).
-* The category for scraped articles is determined from its associated link. However, for MSNBC, the category is assumed to be 'politics'.
-* The scraping operation takes several seconds to complete, primarily because CNN's website uses a lot of javascript and thus requires phantom to load the javascript files before the scraper can continue.
+* The category for scraped articles is determined from its associated link.
+* The scraping operation takes several seconds to complete, primarily because CNN's website uses javascript rendering and thus requires phantom to load the javascript files before the scraper can continue.
 
 ### Data
 

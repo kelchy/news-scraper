@@ -29,17 +29,17 @@ const modifyFoxNewsArticleLink = (link) => {
 
 // Extract category from link
 const extractCategory = (link) => {
-  if (link.match(/\/politics\//g)) {
+  if (link.match(/\/(all-in|mtp-daily|deadline-white-house|the-beat-with-ari-melber|morning-joe|rachel-maddow|the-last-word|brian-williams|politics)\//g)) {
     return 'politics';
   } else if (link.match(/\/(opinions|opinion)\//g)) {
     return 'opinion';
   } else if (link.match(/\/travel\//g)) {
     return 'travel';
-  } else if (link.match(/\/us\//g)) {
+  } else if (link.match(/\/(us|us-news)\//g)) {
     return 'US';
-  } else if (link.match(/\/entertainment\//g)) {
+  } else if (link.match(/\/(entertainment|pop-culture)\//g)) {
     return 'entertainment';
-  } else if (link.match(/\/(technology|tech)\//g)) {
+  } else if (link.match(/\/(technology|tech|tech-news)\//g)) {
     return 'technology';
   } else if (link.match(/(money.cnn|foxbusiness)/g)) {
     return 'business'
@@ -70,23 +70,29 @@ async function getMsnbcArticles(instance) {
   const $ = cheerio.load(content);
   let msnbcArticles = [];
 
-  $('li.featured-slider-menu__item a').each((i, el) => {
-    msnbcArticles.push({
-      source: 'MSNBC',
-      category: 'politics',
-      title: modifyMsnbcArticleTitle($(el).text()),
-      link: modifyMsnbcArticleLink($(el).attr('href'))
-    });
-  });
+  // h2... class="title_..." or "mainTitle_..."
+  $('h2').each((i, el) => {
+    let link, title;
 
-  // $('div.featured-slider__teaser h2.featured-slider__teaser__title a').each((i, el) => {
-  //   msnbcArticles.push({
-  //     source: 'MSNBC',
-  //     category: 'politics',
-  //     title: $(el).text(),
-  //     link: modifyMsnbcArticleLink($(el).attr('href'))
-  //   });
-  // });
+    if ($(el).attr('class').includes('itle_')) {
+      if ($(el).children('a').attr('href') !== undefined) {
+        link = modifyMsnbcArticleLink($(el).children('a').attr('href'));
+      }
+      
+      title = $(el).children('a').text().trim();
+    }
+
+    if (title && link) {
+      msnbcArticles.push({
+        source: 'MSNBC',
+        category: extractCategory(link),
+        title: title,
+        link: link
+      });
+    }
+    
+    
+  });
 
   return msnbcArticles;
 }

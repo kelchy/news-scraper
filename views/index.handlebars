@@ -14,7 +14,7 @@
         <hr>
         <h5>Scraping</h5>
         <p>Article titles and links are scraped from three news websites (MSNBC, CNN, and Fox News) using <a href="https://github.com/amir20/phantomjs-node" target="_blank">PhantomJS</a> and <a herf="https://github.com/cheeriojs/cheerio" target="_blank">Cheerio</a>.</p>
-        <p>The category for scraped articles is determined from its associated link. However, for all MSNBC articles, the category is assumed to be 'politics'.</p>
+        <p>The category for scraped articles is determined from its associated link.</p>
         <h5>Data</h5>
         <p>This app uses a MongoDB for storing data. Scraped articles can be saved for future reference, and each saved article allows for comments.</p>
         <p>A record of every scrape is also saved to the database and can be used to assess whether the three news sites have changed (such that the scraper needs to be updated).</p>
