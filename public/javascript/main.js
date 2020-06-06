@@ -207,7 +207,7 @@ const Render = (() => {
 
       $(`${tabSelector} table.articles-table tbody`).append($tr);
       // kelvin: auto save
-      if (${linkOpts.class} == 'save-article') $('.save-article')[$('.save-article').length-1].click();
+      if (linkOpts.class == 'save-article') $('.save-article')[$('.save-article').length-1].click();
     };
   }
 
