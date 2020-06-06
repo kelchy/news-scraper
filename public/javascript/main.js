@@ -68,7 +68,7 @@ const App = (() => {
       });
     });
 
-    // show saved instead
+    // kelvin: show saved instead
     $('#tabs-nav ul li:eq(2)').children().get(0).click()
     
     $('#saved-tab input[type="checkbox"]').on('change', () => {
@@ -206,6 +206,8 @@ const Render = (() => {
       const $tr = $('<tr>').append($tdTitle, $tdCategory, $tdSource);
 
       $(`${tabSelector} table.articles-table tbody`).append($tr);
+      // kelvin: auto save
+      if (${linkOpts.class} == 'save-article') $('.save-article')[$('.save-article').length-1].click();
     };
   }
 
