@@ -22,7 +22,7 @@ const App = (() => {
     });
 
     // 'Articles' Tab
-    $(document).on('click', '.save-article', function(e) => {
+    $(document).on('click', '.save-article', function(e) {
       e.preventDefault();
 
       const newArticle = {
