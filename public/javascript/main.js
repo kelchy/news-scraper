@@ -67,6 +67,8 @@ const App = (() => {
         Render.showArticlesTable('#saved-tab', result, {class: 'view-comments', text: 'View Comments'});
       });
     });
+
+$('#tabs-nav ul li:eq(2)').click()
     
     $('#saved-tab input[type="checkbox"]').on('change', () => {
       let sources = [];
