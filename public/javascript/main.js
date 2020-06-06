@@ -22,7 +22,11 @@ const App = (() => {
     });
 
     // 'Articles' Tab
-    $(document).on('click', '.save-article', function(e) {
+    $(document).on('click', '.save-article', (e) => {
+      saveArticle(e, this);
+    });
+    const saveArticle = function(e, ctx) {
+      this = ctx;
       e.preventDefault();
 
       const newArticle = {
@@ -40,7 +44,7 @@ const App = (() => {
         $(this).parent().parent().remove();
         Render.showAlert(JSON.stringify(result, undefined, 2));
       });
-    });
+    };
 
     $('#articles-tab input[type="checkbox"]').on('change', () => {
       let sources = [];
