@@ -68,7 +68,8 @@ const App = (() => {
       });
     });
 
-$('#tabs-nav ul li:eq(2)').click()
+    // show saved instead
+    $('#tabs-nav ul li:eq(2)').children().get(0).click()
     
     $('#saved-tab input[type="checkbox"]').on('change', () => {
       let sources = [];
