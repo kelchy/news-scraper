@@ -3,6 +3,16 @@ const cheerio = require('cheerio');
 const { performance } = require('perf_hooks');
 const db = require('../models');
 
+// kelvin: lock mechanism
+let locked = false;
+function lock() {
+    if (locked) return false;
+    locked = true;
+    setTimeout(() => {
+        locked = false;
+    }, 10 * 60 * 1000);
+}
+
 // MSNBC specific helper fns
 const modifyMsnbcArticleTitle = (title) => {
   if (!isNaN(title.slice(0,2))) {
@@ -158,6 +168,13 @@ async function getFoxNewsArticles(instance) {
 }
 
 const getAllArticles = (req, res) => {
+  // kelvin: check lock
+  if (!lock()) {
+      return res.json({
+        scrapeRecord: {},
+        articles: []
+      });
+  }
   (async() => {
     const t0 = performance.now();
     const instance = await phantom.create();
