@@ -11,6 +11,7 @@ function lock() {
     setTimeout(() => {
         locked = false;
     }, 10 * 60 * 1000);
+    return true;
 }
 
 // MSNBC specific helper fns
