@@ -171,7 +171,7 @@ const getAllArticles = (req, res) => {
   // kelvin: check lock
   if (!lock()) {
       return res.json({
-        scrapeRecord: {},
+        scrapeRecord: { error: 'locked' },
         articles: []
       });
   }
