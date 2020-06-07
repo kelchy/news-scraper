@@ -192,6 +192,10 @@ const Render = (() => {
     $(`${tabSelector} table.articles-table tbody`).empty();
     $(`${tabSelector} table.articles-table`).css('display', 'table');
     for (const article of articles) {
+
+      // kelvin: fix links without https://
+      if (article.link.slice(0, 4) != 'http') article.link = `https://${article.link}`;
+
       const $tdTitle = $('<td>', { 
         html: `
           <a href='${article.link}' target='_blank'>${article.title}</a>
