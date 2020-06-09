@@ -211,7 +211,9 @@ const Render = (() => {
 
       $(`${tabSelector} table.articles-table tbody`).append($tr);
       // kelvin: auto save
-      if (linkOpts.class == 'save-article') $('.save-article')[$('.save-article').length-1].click();
+      const likes = [ 'politics', 'US', 'opinion', 'world' ];
+      if (linkOpts.class == 'save-article' && likes.indexOf(article.category) > -1)
+        $('.save-article')[$('.save-article').length-1].click();
     };
   }
 
