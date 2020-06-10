@@ -207,13 +207,22 @@ const Render = (() => {
       });
       const $tdCategory = $('<td>', {text: article.category});
       const $tdSource = $('<td>', {text: article.source});
-      const $tr = $('<tr>').append($tdTitle, $tdCategory, $tdSource);
+      if (tabSelector == '#saved-tab') {
+        // kelvin: show tag
+        const $tdTag = $('<td>', {text: article.tag});
+        const $tr = $('<tr>').append($tdTitle, $tdCategory, $tdTag, $tdSource);
+        $(`${tabSelector} table.articles-table tbody`).append($tr);
+      } else 
+        const $tr = $('<tr>').append($tdTitle, $tdCategory, $tdSource);
+        $(`${tabSelector} table.articles-table tbody`).append($tr);
+      }
 
-      $(`${tabSelector} table.articles-table tbody`).append($tr);
-      // kelvin: auto save
-      const likes = [ 'politics', 'US', 'opinion', 'world' ];
-      if (linkOpts.class == 'save-article' && likes.indexOf(article.category) > -1)
-        $('.save-article')[$('.save-article').length-1].click();
+      // kelvin: auto save, check class just to be sure save button is there
+      if (tabSelector == '#articles-tab') {
+        const likes = [ 'politics', 'US', 'opinion', 'world' ];
+        if (linkOpts.class == 'save-article' && likes.indexOf(article.category) > -1)
+          $('.save-article')[$('.save-article').length-1].click();
+      }
     };
   }
 
