@@ -209,7 +209,7 @@ const Render = (() => {
       const $tdSource = $('<td>', {text: article.source});
       if (tabSelector == '#saved-tab') {
         // kelvin: show tag
-        const $tdTag = $('<td>', {text: article.tag});
+        const $tdTag = $('<td>', {text: article.tag || 'neutral'});
         const $tr = $('<tr>').append($tdTitle, $tdCategory, $tdSource, $tdTag);
         $(`${tabSelector} table.articles-table tbody`).append($tr);
       } else {
