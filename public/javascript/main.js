@@ -209,8 +209,8 @@ const Render = (() => {
       const $tdSource = $('<td>', {text: article.source});
       if (tabSelector == '#saved-tab') {
         // kelvin: show tag
-        const $tdTag = article.tag ? $('<td>', {text: article.tag}) :
-          $('<td>', {html: '<div class=input-field col s12><select><option>neutral</option><option>democrat</option><option>republican</option></select></div>'});
+        const $tdTag = article.tag ? $('<td>', {html: article.tag ||
+          '<select><option>neutral</option><option>democrat</option><option>republican</option></select>'});
         const $tr = $('<tr>').append($tdTitle, $tdCategory, $tdSource, $tdTag);
         $(`${tabSelector} table.articles-table tbody`).append($tr);
       } else {
@@ -225,6 +225,8 @@ const Render = (() => {
           $('.save-article')[$('.save-article').length-1].click();
       }
     };
+    // kelvin: show selects
+    $('select').not('.disabled').formSelect();
   }
 
   const showCommentsTable = (comments, articleId) => {
