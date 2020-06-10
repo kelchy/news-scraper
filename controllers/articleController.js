@@ -1,7 +1,7 @@
 const db = require('../models');
 
 const getArticles = (req, res) => {
-  db.Article.find({}).sort({ dateScraped: -1}).then(articles => {
+  db.Article.find({}).sort({ dateScraped: -1}).limit(20).then(articles => {
     res.json(articles);
   }).catch(err => {
     res.json(err);
