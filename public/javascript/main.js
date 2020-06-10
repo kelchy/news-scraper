@@ -238,8 +238,8 @@ const Render = (() => {
     };
     // kelvin: show selects
     $('select').not('.disabled').formSelect();
-    $tdPrev = $('<td>', {html: '<a>Prev</a>'});
-    $tdNext = $('<td>', {html: '<a>Next</a>'});
+    $tdPrev = $('<td>', {html: '<i class="large material-icons">chevron_left</i>'});
+    $tdNext = $('<td>', {html: '<i class="large material-icons">chevron_right</i>'});
     const $tr = $('<tr>').append($tdPrev, $('<td>'), $('<td>'), $tdNext);
     $(`${tabSelector} table.articles-table tbody`).append($tr);
   }
