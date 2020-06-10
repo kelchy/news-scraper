@@ -6,6 +6,7 @@ const ArticleSchema = new Schema({
   source: String,
   category: String,
   title: String,
+  tag: String,
   link: String,
   dateScraped: { 
     type: Date,
