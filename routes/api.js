@@ -37,4 +37,9 @@ router.delete('/articles/:article_id/comments/:id', (req, res) => {
   commentController.deleteComment(req, res);
 });
 
+// kelvin: update tag
+router.post('/articles/:id/tag', (req, res) => {
+  articleController.tagArticle(req, res);
+});
+
 module.exports = router;

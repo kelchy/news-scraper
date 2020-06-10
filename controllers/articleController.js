@@ -39,9 +39,19 @@ const deleteArticle = (req, res) => {
   });
 }
 
+// kelvin: update tag
+const tagArticle = (req, res) => {
+  db.Article.update({_id: req.params.id},{$set:{tag:req.query.tag}}).then(article => {
+    res.json(article);
+  }).catch(err => {
+    res.json(err);
+  });
+}
+
 module.exports = {
   getArticles,
   getArticle,
   saveArticle,
-  deleteArticle
+  deleteArticle,
+  tagArticle
 }

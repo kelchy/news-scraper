@@ -144,6 +144,17 @@ const App = (() => {
       });
     });
 
+    // kelvin: update tag
+    $(document).on('change', '.update-tag', function(e) {
+      e.preventDefault();
+
+      $.ajax({
+        url: `/api/articles/${$(this).attr('data-id')}/tag?tag=${$(this).attr('value')}`,
+        method: 'POST'
+      }).then(result => {
+      });
+    });
+
     $('#addCommentForm').submit(function(e) {
       e.preventDefault();
       
@@ -210,7 +221,7 @@ const Render = (() => {
       if (tabSelector == '#saved-tab') {
         // kelvin: show tag
         const $tdTag = $('<td>', {html: article.tag ||
-          '<select><option>neutral</option><option>democrat</option><option>republican</option></select>'});
+          `<select class=update-tag data-id=${article._id}><option>neutral</option><option>democrat</option><option>republican</option></select>`});
         const $tr = $('<tr>').append($tdTitle, $tdCategory, $tdSource, $tdTag);
         $(`${tabSelector} table.articles-table tbody`).append($tr);
       } else {
