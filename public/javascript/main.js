@@ -238,6 +238,10 @@ const Render = (() => {
     };
     // kelvin: show selects
     $('select').not('.disabled').formSelect();
+    $tdPrev = $('<td>', {html: '<a>Prev</a>'});
+    $tdNext = $('<td>', {html: '<a>Next</a>'});
+    const $tr = $('<tr>').append($tdPrev, $('<td>'), $('<td>'), $tdNext);
+    $(`${tabSelector} table.articles-table tbody`).append($tr);
   }
 
   const showCommentsTable = (comments, articleId) => {
