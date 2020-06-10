@@ -212,7 +212,7 @@ const Render = (() => {
         const $tdTag = $('<td>', {text: article.tag});
         const $tr = $('<tr>').append($tdTitle, $tdCategory, $tdTag, $tdSource);
         $(`${tabSelector} table.articles-table tbody`).append($tr);
-      } else 
+      } else {
         const $tr = $('<tr>').append($tdTitle, $tdCategory, $tdSource);
         $(`${tabSelector} table.articles-table tbody`).append($tr);
       }
