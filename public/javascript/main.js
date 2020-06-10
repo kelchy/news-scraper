@@ -149,7 +149,7 @@ const App = (() => {
       e.preventDefault();
 
       $.ajax({
-        url: `/api/articles/${$(this).attr('data-id')}/tag?tag=${$(this).attr('value')}`,
+        url: `/api/articles/${$(this).attr('data-id')}/tag?tag=${$(this).val()}`,
         method: 'POST'
       }).then(result => {
       });
