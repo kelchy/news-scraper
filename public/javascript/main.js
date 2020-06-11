@@ -263,20 +263,21 @@ const Render = (() => {
     if (tabSelector == '#saved-tab') {
       const up = articles[0]._id;
       const down = articles[articles.length-1]._id;
-      $tdPrev = $('<td>', {html: `<label></label><a href=# class="prev-next" data-id=${up} data-asc=1><i class="large material-icons">chevron_left</i></a>`});
-      $tdNext = $('<td>', {html: `<label></label><a href=# class="prev-next" data-id=${down} data-asc=0><i class="large material-icons">chevron_right</i></a>`});
+      $tdPrev = $('<td>', {html: `<a href=# class="prev-next" data-id=${up} data-asc=1><i class="large material-icons">chevron_left</i></a><i></i>`});
+      $tdNext = $('<td>', {html: `<i></i><a href=# class="prev-next" data-id=${down} data-asc=0><i class="large material-icons">chevron_right</i></a>`});
       $tdNext.addClass('right-align');
-      const $tr = $('<tr>').append($tdPrev, $('<td>'), $('<td>'), $tdNext);
+      $tdNext.colSpan = "3";
+      const $tr = $('<tr>').append($tdPrev, $tdNext);
       $('#saved-tab table.articles-table tbody').append($tr);
       $.ajax({
         url: `/api/articles?limit=20&idx=${up}&asc=1&count=1`
       }).then(result => {
-        $('#saved-tab table.articles-table tbody tr:last td:first label').html = result;
+        $('#saved-tab table.articles-table tbody tr:last td:first i:last').text(result);
       });
       $.ajax({
         url: `/api/articles?limit=20&idx=${down}&asc=0&count=1`
       }).then(result => {
-        $('#saved-tab table.articles-table tbody tr:last td:last label').html = result;
+        $('#saved-tab table.articles-table tbody tr:last td:last i:first').text(result);
       });
     }
   }
