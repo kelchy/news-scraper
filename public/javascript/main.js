@@ -267,7 +267,8 @@ const Render = (() => {
       $tdNext = $('<td>', {html: `<a href=# class="prev-next" data-id=${down} data-asc=0><i class="small"></i><i class="large material-icons">chevron_right</i></a>`});
       $tdNext.addClass('right-align');
       $tdNext.attr('colspan','3');
-      $tdNext.style.verticalAlign = 'middle';
+      $tdNext.css('vertical-align', 'middle');
+      $tdPrev.css('vertical-align', 'middle');
       const $tr = $('<tr>').append($tdPrev, $tdNext);
       $('#saved-tab table.articles-table tbody').append($tr);
       $.ajax({
