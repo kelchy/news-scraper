@@ -216,6 +216,10 @@ const Render = (() => {
   const showArticlesTable = (tabSelector, articles, linkOpts) => {
     $(`${tabSelector} table.articles-table tbody`).empty();
     $(`${tabSelector} table.articles-table`).css('display', 'table');
+    // kelvin: add header
+    if (tabSelector == '#saved-tab') {
+      $('table thead').find('tr').append('<th>Tag</th>');
+    }
     for (const article of articles) {
 
       // kelvin: fix links without https://
