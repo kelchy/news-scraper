@@ -5,7 +5,9 @@ const getArticles = (req, res) => {
   if (req.query.idx && req.query.asc) {
     filter._id = req.query.asc == '1' ? {'$gt': req.query.idx} : {'$lt': req.query.idx};
   }
-  db.Article.find(filter).sort({_id: -1}).limit(parseInt(req.query.limit) || 100).then(articles => {
+  const q = req.query.count ? db.Article.count(filter) :
+    db.Article.find(filter).sort({_id: -1}).limit(parseInt(req.query.limit) || 100)
+  q.then(articles => {
     res.json(articles);
   }).catch(err => {
     res.json(err);
