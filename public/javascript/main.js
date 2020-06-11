@@ -70,8 +70,8 @@ const App = (() => {
 
     // kelvin: paginate
     $('.prev-next').on('click', () => {
-      const idx = ${$(this).attr('data-id')};
-      const asc = ${$(this).attr('data-asc')};
+      const idx = $(this).attr('data-id');
+      const asc = $(this).attr('data-asc');
       $.get({
         url: `/api/articles?limit=20&idx=${idx}&asc=${asc}`
       }).then(result => {
