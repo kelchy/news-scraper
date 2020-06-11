@@ -155,6 +155,20 @@ const App = (() => {
       });
     });
 
+    // kelvin: paginate
+    $(document).on('click', 'a.prev-next', function(e) {
+      e.preventDefault();
+
+      const idx = $(this).attr('data-id');
+      const asc = $(this).attr('data-asc');
+      $.get({
+        url: `/api/articles?limit=20&idx=${idx}&asc=${asc}`
+      }).then(result => {
+        data.saved = result;
+        Render.showArticlesTable('#saved-tab', result, {class: 'view-comments', text: 'View Comments'});
+      });
+    });
+
     $('#addCommentForm').submit(function(e) {
       e.preventDefault();
       
@@ -248,19 +262,6 @@ const Render = (() => {
       $tdNext.addClass('right-align');
       const $tr = $('<tr>').append($tdPrev, $('<td>'), $('<td>'), $tdNext);
       $(`${tabSelector} table.articles-table tbody`).append($tr);
-
-      // kelvin: paginate
-      $('a.prev-next').on('click', () => {
-        const idx = $(this).attr('data-id');
-        const asc = $(this).attr('data-asc');
-        $.get({
-          url: `/api/articles?limit=20&idx=${idx}&asc=${asc}`
-        }).then(result => {
-          data.saved = result;
-          Render.showArticlesTable('#saved-tab', result, {class: 'view-comments', text: 'View Comments'});
-        });
-      });
-
     }
   }
 
