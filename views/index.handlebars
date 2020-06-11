@@ -9,8 +9,8 @@
       </ul>
     </div>
     <div id="about-tab" class="col s12">
-      <!--div class="tab-content">
-        <p class="center-align"><a href="https://github.com/ats89/news-scraper" target="_blank"><i class="fab fa-github"></i> github link</a></p>
+      <div class="tab-content">
+        <p class="center-align"><a href="https://github.com/kelchy/news-scraper" target="_blank"><i class="fab fa-github"></i> github link</a></p>
         <hr>
         <h5>Scraping</h5>
         <p>Article titles and links are scraped from three news websites (MSNBC, CNN, and Fox News) using <a href="https://github.com/amir20/phantomjs-node" target="_blank">PhantomJS</a> and <a herf="https://github.com/cheeriojs/cheerio" target="_blank">Cheerio</a>.</p>
@@ -29,12 +29,17 @@
             <tr>
               <td>GET</td>
               <td><code>/api/articles</code></td>
-              <td>get all saved articles</td>
+              <td>get all saved articles. option: idx - index, asc - ascending (1), descending (0)</td>
             </tr>
             <tr>
               <td>POST</td>
               <td><code>/api/articles</code></td>
               <td>save a scraped article</td>
+            </tr>
+            <tr>
+              <td>POST</td>
+              <td><code>/api/:id/tag</code></td>
+              <td>add a tag to article</td>
             </tr>
             <tr>
               <td>GET</td>
@@ -63,7 +68,7 @@
             </tr>
           </tbody>
         </table> 
-      </div-->
+      </div>
     </div>
     <div id="articles-tab" class="col s12">
       <div class="tab-content valign-wrapper">

@@ -1,7 +1,11 @@
 const db = require('../models');
 
 const getArticles = (req, res) => {
-  db.Article.find({}).sort({ dateScraped: -1}).limit(20).then(articles => {
+  let filter = {};
+  if (req.query.idx && req.query.asc) {
+    filter._id = req.query.asc == '1' ? {'$gt': req.query.idx} : {'$lt': req.query.idx};
+  }
+  db.Article.find(filter).sort({_id: -1}).limit(parseInt(req.query.limit) || 100).then(articles => {
     res.json(articles);
   }).catch(err => {
     res.json(err);

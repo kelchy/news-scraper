@@ -61,7 +61,19 @@ const App = (() => {
     // 'Saved' Tab
     $('#tabs-nav ul li:eq(2)').on('click', () => {
       $.get({
-        url: '/api/articles'
+        url: '/api/articles?limit=20'
+      }).then(result => {
+        data.saved = result;
+        Render.showArticlesTable('#saved-tab', result, {class: 'view-comments', text: 'View Comments'});
+      });
+    });
+
+    // kelvin: paginate
+    $('.prev-next').on('click', () => {
+      const idx = ${$(this).attr('data-id')};
+      const asc = ${$(this).attr('data-asc')};
+      $.get({
+        url: `/api/articles?limit=20&idx=${idx}&asc=${asc}`
       }).then(result => {
         data.saved = result;
         Render.showArticlesTable('#saved-tab', result, {class: 'view-comments', text: 'View Comments'});
@@ -238,8 +250,12 @@ const Render = (() => {
     };
     // kelvin: show selects
     $('select').not('.disabled').formSelect();
-    $tdPrev = $('<td>', {html: '<a href=#><i class="large material-icons">chevron_left</i></a>'});
-    $tdNext = $('<td>', {html: '<a href=#><i class="large material-icons">chevron_right</i></a>'});
+
+    // kelvin: paginate
+    const start = articles[0]._id;
+    const end = articles[articles.length-1]._id;
+    $tdPrev = $('<td>', {html: `<a href=#><i class="large material-icons" data-id=${start} data-asc=0>chevron_left</i></a>`});
+    $tdNext = $('<td>', {html: `<a href=#><i class="large material-icons" data-id=${end} data-asc=1>chevron_right</i></a>`});
     $tdNext.addClass('right-align');
     const $tr = $('<tr>').append($tdPrev, $('<td>'), $('<td>'), $tdNext);
     $(`${tabSelector} table.articles-table tbody`).append($tr);
