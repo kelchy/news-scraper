@@ -252,13 +252,15 @@ const Render = (() => {
     $('select').not('.disabled').formSelect();
 
     // kelvin: paginate
-    const start = articles[0]._id;
-    const end = articles[articles.length-1]._id;
-    $tdPrev = $('<td>', {html: `<a href=# class="prev-next"><i class="large material-icons" data-id=${start} data-asc=0>chevron_left</i></a>`});
-    $tdNext = $('<td>', {html: `<a href=# class="prev-next"><i class="large material-icons" data-id=${end} data-asc=1>chevron_right</i></a>`});
-    $tdNext.addClass('right-align');
-    const $tr = $('<tr>').append($tdPrev, $('<td>'), $('<td>'), $tdNext);
-    $(`${tabSelector} table.articles-table tbody`).append($tr);
+    if (tabSelector == '#saved-tab') {
+      const start = articles[0]._id;
+      const end = articles[articles.length-1]._id;
+      $tdPrev = $('<td>', {html: `<a href=# class="prev-next"><i class="large material-icons" data-id=${start} data-asc=0>chevron_left</i></a>`});
+      $tdNext = $('<td>', {html: `<a href=# class="prev-next"><i class="large material-icons" data-id=${end} data-asc=1>chevron_right</i></a>`});
+      $tdNext.addClass('right-align');
+      const $tr = $('<tr>').append($tdPrev, $('<td>'), $('<td>'), $tdNext);
+      $(`${tabSelector} table.articles-table tbody`).append($tr);
+    }
   }
 
   const showCommentsTable = (comments, articleId) => {
