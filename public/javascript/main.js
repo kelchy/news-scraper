@@ -254,8 +254,8 @@ const Render = (() => {
     // kelvin: paginate
     const start = articles[0]._id;
     const end = articles[articles.length-1]._id;
-    $tdPrev = $('<td>', {html: `<a href=#><i class="large material-icons" data-id=${start} data-asc=0>chevron_left</i></a>`});
-    $tdNext = $('<td>', {html: `<a href=#><i class="large material-icons" data-id=${end} data-asc=1>chevron_right</i></a>`});
+    $tdPrev = $('<td>', {html: `<a href=#><i class="large material-icons prev-next" data-id=${start} data-asc=0>chevron_left</i></a>`});
+    $tdNext = $('<td>', {html: `<a href=#><i class="large material-icons prev-next" data-id=${end} data-asc=1>chevron_right</i></a>`});
     $tdNext.addClass('right-align');
     const $tr = $('<tr>').append($tdPrev, $('<td>'), $('<td>'), $tdNext);
     $(`${tabSelector} table.articles-table tbody`).append($tr);
