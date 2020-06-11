@@ -266,7 +266,7 @@ const Render = (() => {
       $tdPrev = $('<td>', {html: `<a href=# class="prev-next" data-id=${up} data-asc=1><i class="large material-icons">chevron_left</i></a><i class="small" style="display:inline-block"></i>`});
       $tdNext = $('<td>', {html: `<i class="small" style="display:inline-block"></i><a href=# class="prev-next" data-id=${down} data-asc=0><i class="large material-icons">chevron_right</i></a>`});
       $tdNext.addClass('right-align');
-      $tdNext.colSpan = "3";
+      $tdNext.attr("colspan","3");
       const $tr = $('<tr>').append($tdPrev, $tdNext);
       $('#saved-tab table.articles-table tbody').append($tr);
       $.ajax({
