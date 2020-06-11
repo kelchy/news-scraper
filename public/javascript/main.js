@@ -69,7 +69,7 @@ const App = (() => {
     });
 
     // kelvin: paginate
-    $('.prev-next').on('click', () => {
+    $('a.prev-next').on('click', () => {
       const idx = $(this).attr('data-id');
       const asc = $(this).attr('data-asc');
       $.get({
