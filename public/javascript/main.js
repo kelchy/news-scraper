@@ -164,6 +164,7 @@ const App = (() => {
       $.get({
         url: `/api/articles?limit=20&idx=${idx}&asc=${asc}`
       }).then(result => {
+        if (result && result.length == 0) return;
         data.saved = result;
         Render.showArticlesTable('#saved-tab', result, {class: 'view-comments', text: 'View Comments'});
       });
