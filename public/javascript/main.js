@@ -260,10 +260,10 @@ const Render = (() => {
 
     // kelvin: paginate
     if (tabSelector == '#saved-tab') {
-      const start = articles[0]._id;
-      const end = articles[articles.length-1]._id;
-      $tdPrev = $('<td>', {html: `<a href=# class="prev-next" data-id=${start} data-asc=0><i class="large material-icons">chevron_left</i></a>`});
-      $tdNext = $('<td>', {html: `<a href=# class="prev-next" data-id=${end} data-asc=1><i class="large material-icons">chevron_right</i></a>`});
+      const up = articles[0]._id;
+      const down = articles[articles.length-1]._id;
+      $tdPrev = $('<td>', {html: `<a href=# class="prev-next" data-id=${up} data-asc=1><i class="large material-icons">chevron_left</i></a>`});
+      $tdNext = $('<td>', {html: `<a href=# class="prev-next" data-id=${down} data-asc=0><i class="large material-icons">chevron_right</i></a>`});
       $tdNext.addClass('right-align');
       const $tr = $('<tr>').append($tdPrev, $('<td>'), $('<td>'), $tdNext);
       $(`${tabSelector} table.articles-table tbody`).append($tr);
