@@ -263,8 +263,14 @@ const Render = (() => {
     if (tabSelector == '#saved-tab') {
       const up = articles[0]._id;
       const down = articles[articles.length-1]._id;
-      $tdPrev = $('<td>', {html: `<i class="medium material-icons"><a href=# class="prev-next" data-id=${up} data-asc=1>chevron_left</a></i><i class="small" style="vertical-align:middle"></i>`});
-      $tdNext = $('<td>', {html: `<i class="small" style="vertical-align:middle"></i><i class="medium material-icons"><a href=# class="prev-next" data-id=${down} data-asc=0>chevron_right</a></i>`});
+      $tdPrev = $('<td>', {html: `<table><tr>
+        <td><i class="medium material-icons"><a href=# class="prev-next" data-id=${up} data-asc=1>chevron_left</a></i></td>
+        <td><i class="small" style="vertical-align:middle"></i></td>
+        </tr></table>`});
+      $tdNext = $('<td>', {html: `<table><tr>
+        <td><i class="small" style="vertical-align:middle"></i></td>
+        <td><i class="medium material-icons"><a href=# class="prev-next" data-id=${down} data-asc=0>chevron_right</a></i></td>
+        </tr></table>`});
       $tdNext.addClass('right-align');
       $tdNext.attr('colspan','3');
       const $tr = $('<tr>').append($tdPrev, $tdNext);
