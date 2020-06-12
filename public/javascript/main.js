@@ -268,7 +268,7 @@ const Render = (() => {
         <td><i id=prev class="small"></i></td>
         </tr></table>`});
       $tdNext = $('<td>', {html: `<table><tr style="border-bottom:0px">
-        <td text-align="right"><i id=next class="small"></i></td>
+        <td style="text-align:right"><i id=next class="small"></i></td>
         <td width=10px class="right-align"><i class="medium material-icons"><a href=# class="prev-next" data-id=${down} data-asc=0>chevron_right</a></i></td>
         </tr></table>`});
       $tdNext.attr('colspan','3');
