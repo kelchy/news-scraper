@@ -265,10 +265,10 @@ const Render = (() => {
       const down = articles[articles.length-1]._id;
       $tdPrev = $('<td>', {html: `<table><tr>
         <td><i class="medium material-icons"><a href=# class="prev-next" data-id=${up} data-asc=1>chevron_left</a></i></td>
-        <td><i class="small" style="vertical-align:middle"></i></td>
+        <td><i id=prev class="small"></i></td>
         </tr></table>`});
       $tdNext = $('<td>', {html: `<table><tr>
-        <td><i class="small" style="vertical-align:middle"></i></td>
+        <td><i id=next class="small"></i></td>
         <td><i class="medium material-icons"><a href=# class="prev-next" data-id=${down} data-asc=0>chevron_right</a></i></td>
         </tr></table>`});
       $tdNext.addClass('right-align');
@@ -278,12 +278,12 @@ const Render = (() => {
       $.ajax({
         url: `/api/articles?limit=20&idx=${up}&asc=1&count=1`
       }).then(result => {
-        $('#saved-tab table.articles-table tbody tr:last td:first i:last').text(result);
+        $('#prev').text(result);
       });
       $.ajax({
         url: `/api/articles?limit=20&idx=${down}&asc=0&count=1`
       }).then(result => {
-        $('#saved-tab table.articles-table tbody tr:last td:last i:first').text(result);
+        $('#next').text(result);
       });
     }
   }
