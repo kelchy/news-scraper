@@ -65,6 +65,7 @@ const App = (() => {
         url: '/api/articles?limit=20'
       }).then(result => {
         data.saved = result;
+        // kelvin: hide filters for saved
         Render.hideFilterSettings();
         Render.showArticlesTable('#saved-tab', result, {class: 'view-comments', text: 'View Comments'});
       });
@@ -85,6 +86,7 @@ const App = (() => {
       });
 
       const filtered = data.saved.filter((article) => sources.includes(article.source) && categories.includes(article.category));
+      // kelvin: hide filters for saved
       Render.hideFilterSettings();
       Render.showArticlesTable('#saved-tab', filtered, {class: 'view-comments', text: 'View Comments'});
     });
@@ -169,6 +171,7 @@ const App = (() => {
       }).then(result => {
         if (result && result.length == 0) return;
         data.saved = result;
+        // kelvin: hide filters for saved
         Render.hideFilterSettings();
         Render.showArticlesTable('#saved-tab', result, {class: 'view-comments', text: 'View Comments'});
       });
@@ -347,6 +350,8 @@ const Render = (() => {
     removeLoader,
     showAlert,
     showFilterSettings,
+    // kelvin: hide filters
+    hideFilterSettings,
     showArticlesTable,
     showCommentsTable,
     showNewComment,
