@@ -17,8 +17,7 @@ const App = (() => {
       data.articles = result.articles;
       Render.removeLoader();
       Render.showAlert(JSON.stringify(data.scrapeRecord, undefined, 2));
-      // kelvin: do not show initially as we forced to show saved. avoid race condition
-      //Render.showFilterSettings();
+      Render.showFilterSettings();
       Render.showArticlesTable('#articles-tab', data.articles, {class: 'save-article', text: 'Save'});
     });
 
@@ -55,7 +54,6 @@ const App = (() => {
       });
 
       const filtered = data.articles.filter((article) => sources.includes(article.source) && categories.includes(article.category));
-      Render.showFilterSettings();
       Render.showArticlesTable('#articles-tab', filtered, {class: 'save-article', text: 'Save'});
 
     });
