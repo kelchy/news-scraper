@@ -218,12 +218,12 @@ const Render = (() => {
   }
 
   const showFilterSettings = () => {
-    $('#articles-tab .filter-settings').css('display', 'block');
+    $('.collapsible.filter-settings').css('display', 'block');
   }
 
   // kelvin: func to hide filters
   const hideFilterSettings = () => {
-    $('#articles-tab .filter-settings').css('display', 'none');
+    $('.collapsible.filter-settings').css('display', 'none');
   }
 
   const showArticlesTable = (tabSelector, articles, linkOpts) => {
