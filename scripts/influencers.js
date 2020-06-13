@@ -14,6 +14,7 @@ async function inf() {
     for (gop of republicans.list) {
         await db.Tweet.update({ handler: gop },{ '$set': { tag:'republican', score: 5} }).catch(e=>console.error(e))
     }
+    return;
 }
 
-inf();
+inf().then(()=>process.exit(0));
