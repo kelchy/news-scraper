@@ -17,6 +17,15 @@ const TweetSchema = new Schema({
     minLength: 3,
     maxLength: 240
   }],
+  tag: {
+    type: String,
+    trim: true,
+    minLength: 3,
+    maxLength: 240
+  },
+  score: {
+    type: Number,
+  },
 });
 
 const Tweet = mongoose.model('Tweet', TweetSchema);
