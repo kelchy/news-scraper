@@ -9,10 +9,10 @@ mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 
 async function inf() {
     for (dem of democrats.list) {
-        console.log({ handler: dem },{ '$set': { tag:'democrat', score: 5} })
+        await db.Tweet.update({ handler: dem },{ '$set': { tag:'democrat', score: 5} }).catch(e=>console.error(e))
     }
     for (gop of republicans.list) {
-        console.log({ handler: gop },{ '$set': { tag:'republican', score: 5} })
+        await db.Tweet.update({ handler: gop },{ '$set': { tag:'republican', score: 5} }).catch(e=>console.error(e))
     }
 }
 
