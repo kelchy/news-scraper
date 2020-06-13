@@ -1,6 +1,6 @@
 const puppeteer = require('puppeteer');
-const mongoose = require('mongoose');
-const db = require('./models');
+const mongoose  = require('mongoose');
+const db        = require('../models');
 
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/news-scraper';
 mongoose.Promise = Promise;
