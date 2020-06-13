@@ -219,12 +219,12 @@ const Render = (() => {
   }
 
   const showFilterSettings = () => {
-    $('#articles-tab .filter-settings').css('display', 'block');
+    $('.filter-settings').css('display', 'block');
   }
 
   // kelvin: func to hide filters
   const hideFilterSettings = () => {
-    $('#articles-tab .filter-settings').css('display', 'none');
+    $('.filter-settings').css('display', 'none');
   }
 
   const showArticlesTable = (tabSelector, articles, linkOpts) => {
