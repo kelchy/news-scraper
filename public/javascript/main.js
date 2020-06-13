@@ -54,6 +54,7 @@ const App = (() => {
       });
 
       const filtered = data.articles.filter((article) => sources.includes(article.source) && categories.includes(article.category));
+      Render.showFilterSettings();
       Render.showArticlesTable('#articles-tab', filtered, {class: 'save-article', text: 'Save'});
 
     });
@@ -64,6 +65,7 @@ const App = (() => {
         url: '/api/articles?limit=20'
       }).then(result => {
         data.saved = result;
+        Render.hideFilterSettings();
         Render.showArticlesTable('#saved-tab', result, {class: 'view-comments', text: 'View Comments'});
       });
     });
@@ -83,6 +85,7 @@ const App = (() => {
       });
 
       const filtered = data.saved.filter((article) => sources.includes(article.source) && categories.includes(article.category));
+      Render.hideFilterSettings();
       Render.showArticlesTable('#saved-tab', filtered, {class: 'view-comments', text: 'View Comments'});
     });
 
@@ -166,6 +169,7 @@ const App = (() => {
       }).then(result => {
         if (result && result.length == 0) return;
         data.saved = result;
+        Render.hideFilterSettings();
         Render.showArticlesTable('#saved-tab', result, {class: 'view-comments', text: 'View Comments'});
       });
     });
@@ -212,6 +216,11 @@ const Render = (() => {
 
   const showFilterSettings = () => {
     $('#articles-tab .filter-settings').css('display', 'block');
+  }
+
+  // kelvin: func to hide filters
+  const hideFilterSettings = () => {
+    $('#articles-tab .filter-settings').css('display', 'none');
   }
 
   const showArticlesTable = (tabSelector, articles, linkOpts) => {
