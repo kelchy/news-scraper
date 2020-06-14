@@ -5,18 +5,23 @@ const db        = require('../models');
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/news-scraper';
 mongoose.Promise = Promise;
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
-var lim = 1000;
+var lim = 100;
 var count = 0;
-db.Article.find({},{link:1}).limit(lim).catch(e=>console.error(e)).then(res=>iterate(res));
+
+(function find() {
+    db.Article.find({},{link:1}).sort{{_id:-1}}.limit(lim).catch(e=>console.error(e)).then(res=>iterate(res));
+})();
 
 async function iterate(list) {
     for (o of list) {
+        /*
         var docs = await db.Tweet.countDocuments({articles: o._id}).catch(e=>console.error(e));
         console.log(o._id, docs);
         if (docs > 0) {
             upsert();
             continue;
         }
+        */
         await upsert(o.link, o._id);
     }
 }
@@ -25,12 +30,15 @@ async function upsert(link, id) {
     if (link && id) {
         var list = await fetch(link).catch(e=>console.error(e));
         for (p of list) {
-            console.log(id, p);
+            console.log(id, p, `${count} / ${lim}`);
             await db.Tweet.update({ handle: p }, { '$addToSet': { articles: id } }, { upsert: true }).catch(e=>console.error(e));
         }
     }
     count++;
-    if (count >= lim) process.exit(0);
+    if (count >= lim) {
+        count = 0;
+        find();
+    }
     else return;
 }
 
