@@ -37,7 +37,7 @@ async function upsert(link, id) {
     count++;
     if (count >= lim) {
         count = 0;
-        find();
+        setTimeout(()=>{find()}, 24 * 60 * 60 * 1000);
     }
     else return;
 }
