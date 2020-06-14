@@ -9,7 +9,7 @@ var lim = 100;
 var count = 0;
 
 (function find() {
-    db.Article.find({},{link:1}).sort{{_id:-1}}.limit(lim).catch(e=>console.error(e)).then(res=>iterate(res));
+    db.Article.find({},{link:1}).sort({_id:-1}).limit(lim).catch(e=>console.error(e)).then(res=>iterate(res));
 })();
 
 async function iterate(list) {
