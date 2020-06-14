@@ -30,6 +30,7 @@ async function upsert(link, id) {
     if (link && id) {
         var list = await fetch(link).catch(e=>console.error(e));
         for (p of list) {
+            p = p.toLowerCase();
             console.log(id, p, `${count} / ${lim}`);
             await db.Tweet.update({ handle: p }, { '$addToSet': { articles: id } }, { upsert: true }).catch(e=>console.error(e));
         }
