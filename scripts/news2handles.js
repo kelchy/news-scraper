@@ -27,6 +27,7 @@ async function iterate(list) {
 }
 
 async function upsert(link, id) {
+    count++;
     if (link && id) {
         var list = await fetch(link).catch(e=>console.error(e));
         for (p of list) {
@@ -35,7 +36,6 @@ async function upsert(link, id) {
             await db.Tweet.update({ handle: p }, { '$addToSet': { articles: id } }, { upsert: true }).catch(e=>console.error(e));
         }
     }
-    count++;
     if (count >= lim) {
         count = 0;
         setTimeout(()=>{find()}, 24 * 60 * 60 * 1000);
