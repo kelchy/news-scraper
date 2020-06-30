@@ -241,7 +241,8 @@ const Render = (() => {
       if (tabSelector == '#saved-tab') {
         // kelvin: show tag
         const $tdTag = $('<td>', {html: article.tag ||
-          `<select class=update-tag data-id=${article._id}><option>neutral</option><option>democrat</option><option>republican</option></select>`});
+          'unknown'});
+          //`<select class=update-tag data-id=${article._id}><option>neutral</option><option>democrat</option><option>republican</option></select>`});
         const $tr = $('<tr>').append($tdTitle, $tdCategory, $tdSource, $tdTag);
         $(`${tabSelector} table.articles-table tbody`).append($tr);
       } else {
