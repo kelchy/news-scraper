@@ -189,6 +189,34 @@ const App = (() => {
         Render.showRecordsTable(result);
       });
     });
+
+    // kelvin: add link
+    $(document).on('click', 'a.add-link', function(e) {
+      e.preventDefault();
+
+      const link = $('#linkadd').val();
+      if (link == '') return;
+      if (link.slice(0, 4) != 'http') return alert('Error: invalid link');
+
+      const newArticle = {
+        source: 'User',
+        category: 'link',
+        title: link,
+        link: link
+      };
+
+      $.post({
+        url: '/api/articles',
+        data: newArticle
+      }).then(result => {
+        // reload save
+        $('#tabs-nav ul li:eq(2)').children().get(0).click()
+//        data.articles = data.articles.filter((article) => article.title !== newArticle.title);
+//        $(this).parent().parent().remove();
+//        Render.showAlert(JSON.stringify(result, undefined, 2));
+      });
+      
+    });
   }
 
   return {
@@ -221,6 +249,13 @@ const Render = (() => {
     if (tabSelector == '#saved-tab') {
       if ($('#saved-tab table.articles-table').find('th').length < 4)
         $('#saved-tab table.articles-table thead').find('tr').append('<th>Tag</th>');
+      const $tdIn = $('<td>', { 
+        html: '<input type=text placeholder="Add New URL" id=linkadd>' });
+      $tdIn.attr('colspan','3');
+      const $tdSub = $('<td>', {
+        html: '<a class="waves-effect waves-light btn-small add-link">Add</a>' });
+      const $trIn = $('<tr>').append($tdIn, $tdSub);
+      $(`${tabSelector} table.articles-table tbody`).append($trIn);
     }
     for (const article of articles) {
 
