@@ -32,7 +32,7 @@ const saveArticle = (req, res) => {
   child.exec(`python3 ./predictor/predict.py "${article.title}"`, { timeout: 5000 }, (error, stdout, stderr) => {
       if (error) console.error(error);
       if (stderr) console.error(stderr);
-      if (stdout) article.tag = stdout; 
+      if (stdout) article.tag = stdout.trim().toLowerCase(); 
   db.Article.create(article).then(article => {
     res.json(article);
   }).catch(err => {
