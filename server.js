@@ -3,7 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const exphbs = require('express-handlebars');
 const mongoose = require('mongoose');
-const child = require('child_process');
+const classify = require('./scripts/classify');
 
 //===== App
 const app = express();
@@ -39,5 +39,5 @@ app.listen(PORT, () => {
 
 // run script every minute
 setInterval(() => {
-    child.exec('node ./scripts/classify.js', (error) => { console.error(error) });
+  classify.untagged(10).catch(e => console.error(e));
 }, 60 * 1000)
