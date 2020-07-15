@@ -1,4 +1,5 @@
 const child = require('child_process');
+const puppeteer = require('puppeteer');
 const db = require('../models');
 
 const getArticles = (req, res) => {
@@ -29,9 +30,13 @@ const getArticle = (req, res) => {
 const saveArticle = (req, res) => {
   const article = req.body;
   // kelvin: classify article
-  const classify = (cb) => {
+  const classify = async (cb) => {
     // we don't want to classify all because it will crash
     if (article.source != 'User') return cb();
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+    await page.goto(url, { waitUntil: 'networkidle2' });
+    article.title = await page.title();
     child.exec(`python3 ./predictor/predict.py "${article.title}"`, { timeout: 5000 }, (error, stdout, stderr) => {
       if (error) console.error(error);
       if (stderr) console.error(stderr);
