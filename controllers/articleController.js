@@ -1,3 +1,4 @@
+const child = require('child_process');
 const db = require('../models');
 
 const getArticles = (req, res) => {
@@ -27,11 +28,17 @@ const getArticle = (req, res) => {
 
 const saveArticle = (req, res) => {
   const article = req.body;
-
+  // kelvin: classify
+  child.exec(`python3 ./predictor/predict.py ${str}`, { timeout: 5000 }, (error, stdout, stderr) => {
+      if (error) console.error(error);
+      if (stderr) console.error(stderr);
+      if (stdout) article.tag = stdout; 
   db.Article.create(article).then(article => {
     res.json(article);
   }).catch(err => {
     res.json(err);
+  });
+  // kelvin: end
   });
 }
 
