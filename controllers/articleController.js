@@ -37,6 +37,7 @@ const saveArticle = (req, res) => {
     const page = await browser.newPage();
     await page.goto(article.link, { waitUntil: 'networkidle2' });
     article.title = await page.title();
+    browser.close().catch(e=>console.error(e));
     child.exec(`python3 ./predictor/predict.py "${article.title}"`, { timeout: 10000 }, (error, stdout, stderr) => {
       if (error) console.error(error);
       if (stderr) console.error(stderr);
