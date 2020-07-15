@@ -19,7 +19,7 @@ with open(vectorize_Filename, 'rb') as file:
 with open(encoder_Filename, 'rb') as file:
     encoder = pickle.load(file)
 
-saved_model = pickle.load(open('Pickle_NB_Model.pkl','rb'))
+saved_model = pickle.load(open(Pkl_Filename,'rb'))
 
 Xte = vectorizer.transform(data)
 
