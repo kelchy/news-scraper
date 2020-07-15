@@ -33,7 +33,7 @@ const saveArticle = (req, res) => {
   const classify = async (cb) => {
     // we don't want to classify all because it will crash
     if (article.source != 'User') return cb();
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({ args: ['--no-sandbox'] });
     const page = await browser.newPage();
     await page.goto(url, { waitUntil: 'networkidle2' });
     article.title = await page.title();
