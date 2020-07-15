@@ -193,9 +193,10 @@ const App = (() => {
     // kelvin: add link
     $(document).on('click', 'a.add-link', function(e) {
       e.preventDefault();
-      $(this).addClass('disabled');
 
       const link = $('#linkadd').val();
+      $(this).addClass('disabled');
+      $('#linkadd').prop('disabled', true);
       if (link == '') return;
       if (link.slice(0, 4) != 'http') return alert('Error: invalid link');
 
@@ -211,6 +212,7 @@ const App = (() => {
         data: newArticle
       }).then(result => {
         $(this).removeClass('disabled');
+        $('#linkadd').prop('disabled', false);
         // reload save
         $('#tabs-nav ul li:eq(2)').children().get(0).click()
 //        data.articles = data.articles.filter((article) => article.title !== newArticle.title);
