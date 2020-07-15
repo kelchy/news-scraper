@@ -13,6 +13,7 @@ class Classify {
       await page.goto(article.link, { waitUntil: 'networkidle2' }).catch(e=>console.error(e));
       article.title = await page.title().catch(e=>console.error(e));
       const tag = await getTag(article.title).catch(e=>console.error(e));
+      browser.close().catch(e=>console.error(e));
       if (tag) {
         await db.Article.update({ _id: article._id }, { '$set': { tag } }).catch(e=>console.error(e));
         console.log(article.link, tag);
