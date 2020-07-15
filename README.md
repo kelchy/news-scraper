@@ -46,4 +46,3 @@
 ## Technologies
 
 * MongoDB, Mongoose, Node.js, Express, Handlebars.js, JavaScript, jQuery, Materialize
-#
