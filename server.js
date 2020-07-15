@@ -3,7 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const exphbs = require('express-handlebars');
 const mongoose = require('mongoose');
-const child = require('child-process');
+const child = require('child_process');
 
 //===== App
 const app = express();
