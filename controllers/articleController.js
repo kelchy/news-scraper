@@ -35,7 +35,7 @@ const saveArticle = (req, res) => {
     if (article.source != 'User') return cb();
     const browser = await puppeteer.launch({ args: ['--no-sandbox'] });
     const page = await browser.newPage();
-    await page.goto(url, { waitUntil: 'networkidle2' });
+    await page.goto(article.link, { waitUntil: 'networkidle2' });
     article.title = await page.title();
     child.exec(`python3 ./predictor/predict.py "${article.title}"`, { timeout: 5000 }, (error, stdout, stderr) => {
       if (error) console.error(error);
