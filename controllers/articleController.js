@@ -28,17 +28,23 @@ const getArticle = (req, res) => {
 
 const saveArticle = (req, res) => {
   const article = req.body;
-  // kelvin: classify
-  child.exec(`python3 ./predictor/predict.py "${article.title}"`, { timeout: 5000 }, (error, stdout, stderr) => {
+  // kelvin: classify article
+  const classify = (cb) => {
+    // we don't want to classify all because it will crash
+    if (article.source != 'User') return cb();
+    child.exec(`python3 ./predictor/predict.py "${article.title}"`, { timeout: 5000 }, (error, stdout, stderr) => {
       if (error) console.error(error);
       if (stderr) console.error(stderr);
       if (stdout) article.tag = stdout.trim().toLowerCase(); 
-  db.Article.create(article).then(article => {
-    res.json(article);
-  }).catch(err => {
-    res.json(err);
-  });
-  // kelvin: end
+      cb();
+    });
+  };
+  classify(() => {
+    db.Article.create(article).then(article => {
+      res.json(article);
+    }).catch(err => {
+      res.json(err);
+    });
   });
 }
 
