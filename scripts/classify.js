@@ -6,7 +6,7 @@ class Classify {
 
   static async untagged(limit) {
     const articles = await db.Article.find({ tag: { '$exists': 0 } }, {}, { sort: { _id: -1 }, limit }).catch(e=>console.error(e));
-    for (article of articles) {
+    for (let article of articles) {
       if (article.link.slice(0, 4) != 'http') article.link = `https://${article.link}`;
       const browser = await puppeteer.launch({ args: ['--no-sandbox'] }).catch(e=>console.error(e));
       const page = await browser.newPage().catch(e=>console.error(e));
