@@ -39,12 +39,9 @@ const saveArticle = (req, res) => {
       if (article.link.slice(0, 4) != 'http') article.link = `https://${article.link}`;
       article.title = await urlTitle(article.link).catch(e=>console.error(e));
     }
-    child.exec(`python3 ./predictor/predict.py "${article.title}"`, { timeout: 10000 }, (error, stdout, stderr) => {
-      if (error) console.error(error);
-      if (stderr) console.error(stderr);
-      if (stdout) article.tag = stdout.trim().toLowerCase(); 
-      cb();
-    });
+    article.tag = await ctrl.getTag(article.title).catch(e=>console.error(e));
+    console.log(article.tag, article.title);
+    cb();
   };
   classify(() => {
     db.Article.create(article).then(article => {
@@ -89,6 +86,21 @@ async function puppe(url) {
 }
 */
 
+// kelvin: get tag
+const getTag = (title) => {
+  return new Promise((resolve, reject) => {
+    if (!title) return null;
+    let tag;
+    title = title.replace(/"/g, '\\"');
+    child.exec(`python3 ./predictor/predict.py "${title}"`, { timeout: 10000 }, (error, stdout, stderr) => {
+      if (error) return reject(error);
+      if (stderr) return reject(stderr);
+      if (stdout) tag = stdout.trim().toLowerCase();
+      resolve(tag);
+    });
+  });
+}
+
 // kelvin: update tag
 const tagArticle = (req, res) => {
   db.Article.update({_id: req.params.id},{$set:{tag:req.query.tag}}).then(article => {
@@ -105,5 +117,6 @@ module.exports = {
   deleteArticle,
   // kelvin: urlTitle, tag
   urlTitle,
+  getTag,
   tagArticle
 }
