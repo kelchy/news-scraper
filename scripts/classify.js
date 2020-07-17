@@ -8,8 +8,10 @@ class Classify {
   static async untagged(limit) {
     const articles = await db.Article.find({ tag: { '$exists': 0 } }, {}, { sort: { _id: -1 }, limit }).catch(e=>console.error(e));
     for (let article of articles) {
-      if (article.link.slice(0, 4) != 'http') article.link = `https://${article.link}`;
-      article.title = await cheer(article.link).catch(e=>console.error(e));
+      if (!article.title) {
+          if (article.link.slice(0, 4) != 'http') article.link = `https://${article.link}`;
+          article.title = await cheer(article.link).catch(e=>console.error(e));
+      }
       const tag = await getTag(article.title).catch(e=>console.error(e));
       if (tag) {
         await db.Article.update({ _id: article._id }, { '$set': { tag } }).catch(e=>console.error(e));
