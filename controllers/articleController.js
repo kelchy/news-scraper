@@ -39,7 +39,7 @@ const saveArticle = (req, res) => {
       if (article.link.slice(0, 4) != 'http') article.link = `https://${article.link}`;
       article.title = await urlTitle(article.link).catch(e=>console.error(e));
     }
-    article.tag = await ctrl.getTag(article.title).catch(e=>console.error(e));
+    article.tag = await getTag(article.title).catch(e=>console.error(e));
     console.log(article.tag, article.title);
     cb();
   };
