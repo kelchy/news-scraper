@@ -78,7 +78,7 @@ const urlTitle = (url) => {
   });
 }
 
-/* kelvin: unused
+/* kelvin: unused, need to load https://github.com/jontewks/puppeteer-heroku-buildpack for heroku
 async function puppe(url) {
   const browser = await puppeteer.launch({ args: ['--no-sandbox'] }).catch(e=>console.error(e));
   const page = await browser.newPage().catch(e=>console.error(e));
