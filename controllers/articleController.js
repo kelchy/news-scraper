@@ -1,5 +1,6 @@
+const request = require('request');
+const cheerio = require('cheerio');
 const child = require('child_process');
-const puppeteer = require('puppeteer');
 const db = require('../models');
 
 const getArticles = (req, res) => {
@@ -33,11 +34,11 @@ const saveArticle = (req, res) => {
   const classify = async (cb) => {
     // we don't want to classify all because it will crash
     if (article.source != 'User') return cb();
-    const browser = await puppeteer.launch({ args: ['--no-sandbox'] });
-    const page = await browser.newPage();
-    await page.goto(article.link, { waitUntil: 'networkidle2' });
-    article.title = await page.title();
-    browser.close().catch(e=>console.error(e));
+    if (!article.title) {
+      // assume https if not present
+      if (article.link.slice(0, 4) != 'http') article.link = `https://${article.link}`;
+      article.title = await urlTitle(article.link).catch(e=>console.error(e));
+    }
     child.exec(`python3 ./predictor/predict.py "${article.title}"`, { timeout: 10000 }, (error, stdout, stderr) => {
       if (error) console.error(error);
       if (stderr) console.error(stderr);
@@ -64,6 +65,30 @@ const deleteArticle = (req, res) => {
   });
 }
 
+// kelvin: get title of url
+const urlTitle = (url) => {
+  return new Promise((resolve, reject) => {
+    request(url, function (error, response, body) {
+      if (error) return reject(error);
+      if (response && response.statusCode != 200) return new Error(`Error: ${url} ${response.statusCode}`);
+      const $ = cheerio.load(body);
+      const title = $("head > title").text().trim();
+      resolve(title);
+    });
+  });
+}
+
+/* kelvin: unused
+async function puppe(url) {
+  const browser = await puppeteer.launch({ args: ['--no-sandbox'] }).catch(e=>console.error(e));
+  const page = await browser.newPage().catch(e=>console.error(e));
+  await page.goto(article.link, { waitUntil: 'domcontentloaded' }).catch(e=>console.error(e));
+  const title = await page.title().catch(e=>console.error(e));
+  browser.close().catch(e=>console.error(e));
+  return title;
+}
+*/
+
 // kelvin: update tag
 const tagArticle = (req, res) => {
   db.Article.update({_id: req.params.id},{$set:{tag:req.query.tag}}).then(article => {
@@ -78,5 +103,7 @@ module.exports = {
   getArticle,
   saveArticle,
   deleteArticle,
+  // kelvin: urlTitle, tag
+  urlTitle,
   tagArticle
 }

@@ -1,5 +1,3 @@
-const request = require('request');
-const cheerio = require('cheerio');
 const child = require('child_process');
 const db = require('../models');
 
@@ -10,7 +8,7 @@ class Classify {
     for (let article of articles) {
       if (!article.title) {
           if (article.link.slice(0, 4) != 'http') article.link = `https://${article.link}`;
-          article.title = await cheer(article.link).catch(e=>console.error(e));
+          article.title = await db.Article.urlTitle(article.link).catch(e=>console.error(e));
       }
       const tag = await getTag(article.title).catch(e=>console.error(e));
       if (tag) {
@@ -21,27 +19,6 @@ class Classify {
     return;
   }
 
-}
-
-function cheer(url) {
-  return new Promise((resolve, reject) => {
-    request(url, function (error, response, body) {
-      if (error) return reject(error);
-      if (response && response.statusCode != 200) return new Error(`Error: ${url} ${response.statusCode}`);
-      const $ = cheerio.load(body);
-      const title = $("head > title").text().trim();
-      resolve(title);
-    });
-  });
-}
-
-async function puppe(url) {
-  const browser = await puppeteer.launch({ args: ['--no-sandbox'] }).catch(e=>console.error(e));
-  const page = await browser.newPage().catch(e=>console.error(e));
-  await page.goto(article.link, { waitUntil: 'domcontentloaded' }).catch(e=>console.error(e));
-  const title = await page.title().catch(e=>console.error(e));
-  browser.close().catch(e=>console.error(e));
-  return title;
 }
 
 function getTag(title) {
