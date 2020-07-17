@@ -1,5 +1,6 @@
 const child = require('child_process');
 const db = require('../models');
+const ctrl = require('../controllers/articleController');
 
 class Classify {
 
@@ -8,7 +9,7 @@ class Classify {
     for (let article of articles) {
       if (!article.title) {
           if (article.link.slice(0, 4) != 'http') article.link = `https://${article.link}`;
-          article.title = await db.Article.urlTitle(article.link).catch(e=>console.error(e));
+          article.title = await ctrl.urlTitle(article.link).catch(e=>console.error(e));
       }
       const tag = await getTag(article.title).catch(e=>console.error(e));
       if (tag) {
