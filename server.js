@@ -35,3 +35,17 @@ app.use('/api', api);
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
 });
+
+// kelvin: tag articles
+const classify = require('./scripts/classify');
+let lock = false;
+setInterval(() => {
+  if (lock) return;
+  lock = true;
+  classify.untagged(10).then(res => {
+    lock=false;
+  }).catch(e => {
+    lock=false;
+    console.error(e);
+  });
+}, 60 * 1000);
