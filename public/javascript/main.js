@@ -203,7 +203,6 @@ const App = (() => {
       const newArticle = {
         source: 'User',
         category: 'link',
-        title: link,
         link: link
       };
 
