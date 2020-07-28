@@ -65,7 +65,7 @@ const deleteArticle = (req, res) => {
 // kelvin: get title of url
 const urlTitle = (url) => {
   return new Promise((resolve, reject) => {
-    request(url, function (error, response, body) {
+    request(url, { headers: { 'User-Agent': 'Mozilla/5.0' }}, function (error, response, body) {
       if (error) return reject(error);
       if (response && response.statusCode != 200) return new Error(`Error: ${url} ${response.statusCode}`);
       const $ = cheerio.load(body);
