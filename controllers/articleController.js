@@ -92,7 +92,7 @@ const getTag = (title) => {
     if (!title) return null;
     let tag;
     title = title.replace(/"/g, '\\"');
-    child.exec(`python3 ./predictor/predict.py "${title}"`, { timeout: 10000 }, (error, stdout, stderr) => {
+    child.exec(`python3 -Wignore ./predictor/predict.py "${title}"`, { timeout: 10000 }, (error, stdout, stderr) => {
       if (error) return reject(error);
       if (stderr) return reject(stderr);
       if (stdout) tag = stdout.trim().toLowerCase();
